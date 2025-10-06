@@ -1,8 +1,6 @@
-/* مساحة للمحتوى تحت الهيدر */
 /* Top spacing for fixed header */
 .order-main { display: flex; gap: 38px; justify-content: space-between; padding: 120px 50px 40px; }
 
-/* القائمة والسلة */
 /* Menu & basket */
 .menu { flex: 2; background: #1b1b1b; border-radius: 12px; padding: 18px 18px 8px; box-shadow: 0 0 10px rgba(0,0,0,.35); }
 .basket { flex: 1; background: #141414; border-radius: 12px; padding: 18px; box-shadow: 0 0 10px rgba(0,0,0,.35); position: sticky; top: 90px; }
