@@ -14,19 +14,16 @@ body.theme-blue{
 
 /* ========= Global Reset ========= */
 /* EN: Basic reset and typography. */
-/* AR: تهيئة عامة والخط. */
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
 
 /* ========= Accessibility Helpers ========= */
 /* EN: Helpers for screen-readers and focus visibility. */
-/* AR: مساعدات لقارئ الشاشة وإظهار التركيز. */
 .visually-hidden{position:absolute;left:-9999px}
 :focus-visible{outline:2px dashed var(--accent-color);outline-offset:3px}
 
 /* ========= Header (Unified) ========= */
 /* EN: Same header across pages, sticky, glass effect. */
-/* AR: هيدر موحد بكل الصفحات مع تأثير زجاجي وتثبيت. */
 header{
 	
   position:fixed;top:0;left:0;right:0;z-index:1000;
@@ -61,7 +58,6 @@ body.theme-blue #themeBtn{background:var(--accent-color)}
 
 /* ========= Footer (Unified) ========= */
 /* EN: Unified footer with accessibility line. */
-/* AR: فوتر موحد مع سطر دعم الوصول. */
 footer {
   text-align: center;
   padding: 18px 12px;
@@ -69,7 +65,7 @@ footer {
   background: transparent !important;
   border: none !important;
   backdrop-filter: none !important;
-  margin-top: 40px; /* ← هذا يحل المشكلة */
+  margin-top: 40px; 
 }
 
 
@@ -78,12 +74,10 @@ footer {
 
 /* ========= Sections Spacing ========= */
 /* EN: Push content below fixed header. */
-/* AR: إزاحة المحتوى لتحت الهيدر المثبت. */
 .page-wrap{padding-top:88px}
 
 /* ========= Responsive ========= */
 /* EN: Simple responsive tune-ups. */
-/* AR: تحسينات استجابة بسيطة. */
 @media (max-width:900px){
   header{padding:10px 16px}
   .logo-text h1{font-size:1.05rem}
@@ -91,6 +85,6 @@ footer {
 }
 
 #dots {
-  margin-bottom: 40px; /* ← نرفع الدوائر فوق الفوتر بمسافة واضحة */
+  margin-bottom: 40px;
 }
 
