@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- عرض متجاوب -->
+  <!-- Responsive viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Super Slice – Order</title>
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- أنماط مشتركة + أنماط صفحة الطلب -->
+  <!-- Shared + Order page styles -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/order.css">
+</head>
+<body class="theme-orange">
+  <a href="#main" class="skip-link" aria-label="Skip to content">Skip to content</a>
+
+  <!-- Header موحّد -->
+  <header class="site-header" role="banner" aria-label="Site header">
+    <div class="logo" tabindex="0">
+      <img src="images/super-slice-logo.png" alt="Super Slice Logo">
+      <div class="logo-text">
+        <h1 id="brand" data-en="SUPER SLICE" data-ar="سوبر سلايس">SUPER SLICE</h1>
+        <p id="tagline" data-en="One Slice, Endless Flavor" data-ar="شريحة واحدة، نكهة لا تنتهي">One Slice, Endless Flavor</p>
+      </div>
+    </div>
+
+    <nav id="topNav" class="main-nav" role="navigation" aria-label="Main navigation">
+      <a href="index.html">
+        <span class="material-icons" aria-hidden="true">home</span>
+        <span class="nav-text" data-en="Home" data-ar="الرئيسية">Home</span>
+      </a>
+      <a href="order.html" class="active">
+        <span class="material-icons" aria-hidden="true">shopping_cart</span>
+        <span class="nav-text" data-en="Order" data-ar="اطلب الآن">Order</span>
+      </a>
+      <a href="contact.html">
+        <span class="material-icons" aria-hidden="true">call</span>
+        <span class="nav-text" data-en="Contact" data-ar="تواصل">Contact</span>
+      </a>
+      <a href="#">
+        <span class="material-icons" aria-hidden="true">login</span>
+        <span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span>
+      </a>
+      <a href="#">
+        <span class="material-icons" aria-hidden="true">person_add</span>
+        <span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span>
+      </a>
+    </nav>
+
+    <div class="controls">
+      <button id="themeBtn" class="theme-toggle" aria-label="Toggle Theme"></button>
+      <button id="langBtn" class="lang-toggle" aria-label="Toggle Language">AR</button>
+    </div>
+  </header>
+
+  <main id="main" class="order-main" role="main">
+    <section class="menu" aria-labelledby="menuTitle">
+      <div class="menu-header">
+        <h2 id="menuTitle" data-en="Menu" data-ar="القائمة">Menu</h2>
+        <div class="filters">
+          <div class="select-wrap">
+            <label id="catLabel" for="category" data-en="Category:" data-ar="التصنيف:">Category:</label>
+            <select id="category" aria-label="Category">
+              <option value="pizza" data-en="Pizza" data-ar="بيتزا">Pizza</option>
+              <option value="pasta" data-en="Pasta" data-ar="باستا">Pasta</option>
+              <option value="drinks" data-en="Drinks" data-ar="مشروبات">Drinks</option>
+            </select>
+          </div>
+
+          <div class="select-wrap">
+            <label id="sortLabel" for="sort" data-en="Sort by:" data-ar="الفرز حسب:">Sort by:</label>
+            <select id="sort" aria-label="Sort by">
+              <option value="name" data-en="Name" data-ar="الاسم">Name</option>
+              <option value="price" data-en="Price" data-ar="السعر">Price</option>
+              <option value="calories" data-en="Calories" data-ar="السعرات">Calories</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="filters-divider" aria-hidden="true"></div>
+      <div id="grid" class="menu-items" role="list"></div>
+    </section>
+
+    <aside class="basket" aria-labelledby="basketTitle">
+      <h2 id="basketTitle" data-en="Your Basket" data-ar="سلتك">Your Basket</h2>
+      <div id="basketList"></div>
+      <div class="total">
+        <span id="totalLabel" data-en="Total:" data-ar="الإجمالي:">Total:</span>
+        $<span id="total">0.00</span>
+      </div>
+      <button class="place" id="placeBtn" data-en="Place Order" data-ar="إتمام الطلب" aria-label="Place Order">Place Order</button>
+    </aside>
+  </main>
+
+  <footer id="foot" class="site-footer" role="contentinfo">
+    © 2025 Super Slice. All rights reserved. · <span aria-label="Accessibility Statement">♿ This website is accessibility-friendly</span>
+  </footer>
+
+  <!-- === Order Popup (3 steps) === -->
+  <div id="orderPopup" role="dialog" aria-modal="true" aria-labelledby="enterDetails">
+    <!-- Step 1 -->
+    <div class="popup-box" id="step1">
+      <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
+      <h3 id="enterDetails">Enter Your Details</h3>
+
+      <input id="custName" placeholder="Full Name" type="text" required aria-label="Full Name">
+      <div class="inline-group">
+        <label class="sr" for="countryCode">Country Code</label>
+        <select id="countryCode" style="flex:1" aria-label="Country Code">
+          <option value="+966">🇸🇦 +966</option>
+          <option value="+44">🇬🇧 +44</option>
+        </select>
+        <input id="phone" placeholder="Phone Number" style="flex:2" type="text" aria-label="Phone Number">
+      </div>
+
+      <input id="email" placeholder="Email" type="email" aria-label="Email">
+      <textarea id="address" placeholder="Address (Optional)" aria-label="Address (Optional)"></textarea>
+
+      <div class="buttons">
+        <button class="cancel" onclick="closePopup()" id="cancelBtn">Cancel</button>
+        <button class="next" onclick="nextStep(2)" id="continueBtn">Continue</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="popup-box" id="step2" style="display:none;">
+      <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
+      <h3 id="paymentTitle">Payment Method</h3>
+
+      <select id="paymentMethod" aria-label="Payment Method">
+        <option value="cash">💵 Cash on Delivery</option>
+        <option value="card">💳 Credit/Debit Card</option>
+      </select>
+
+      <div id="cardFields" style="display:none;">
+        <input id="cardNumber" placeholder="Card Number" maxlength="16" type="text" aria-label="Card Number">
+        <input id="cardExpiry" placeholder="MM/YY" type="text" aria-label="Card Expiry">
+        <input id="cardCVV" placeholder="CVV" maxlength="3" type="text" aria-label="Card CVV">
+      </div>
+
+      <div class="buttons">
+        <button class="back" onclick="nextStep(1)" id="backBtn">Back</button>
+        <button class="next" onclick="nextStep(3)" id="nextBtn">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="popup-box" id="step3" style="display:none;">
+      <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
+      <h3 id="confirmTitle">Confirm Your Order</h3>
+      <p id="orderSummaryText">Order summary will appear here.</p>
+
+      <div class="buttons" id="confirmButtons">
+        <button class="back" onclick="nextStep(2)" id="backConfirmBtn">Back</button>
+        <button class="confirm" onclick="finishOrder()" id="confirmBtn">Confirm</button>
+      </div>
+
+      <div id="afterConfirm" style="display:none;text-align:center;margin-top:10px;">
+        <button class="next" onclick="downloadInvoiceHTML()">📄 <span data-en="Download Invoice" data-ar="تحميل الفاتورة">Download Invoice</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- سكربت مشترك + سكربت الطلب -->
+  <!-- Common JS + Order JS -->
+  <script src="js/common.js"></script>
+  <script src="js/order.js"></script>
+</body>
+</html>

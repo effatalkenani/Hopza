@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Slice</title>
+  <!-- Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    :root {
+      --accent-color: #ffb703; /* برتقالي */
+      --hover-color: #219ebc;  /* أزرق */
+    }
+    .theme-orange {
+      --accent-color: #ffb703;
+      --hover-color: #219ebc;
+    }
+    .theme-blue {
+      --accent-color: #219ebc;
+      --hover-color: #ffb703;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+    }
+
+    /* ================= HEADER ================= */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 40px;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(6px);
+      z-index: 1000;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo img {
+      height: 48px;
+    }
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+    .logo-text h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+    .logo-text p {
+      margin: 0;
+      font-size: 0.9rem;
+      font-style: italic;
+      opacity: 0.8;
+    }
+
+    nav {
+      display: flex;
+      gap: 22px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: 0.3s;
+    }
+    nav a .material-icons {
+      font-size: 20px;
+    }
+    nav a:hover {
+      color: var(--accent-color);
+    }
+    nav a.active {
+      color: var(--accent-color);
+    }
+
+    /* ================= CONTROLS ================= */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: 20px;
+    }
+    .lang-toggle, .theme-toggle {
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .lang-toggle {
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: var(--accent-color);
+      color: #000;
+    }
+    .lang-toggle:hover {
+      background: var(--hover-color);
+      color: #fff;
+    }
+    .theme-toggle {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
+    body.theme-orange .theme-toggle {
+      background: #219ebc;
+    }
+    body.theme-blue .theme-toggle {
+      background: #ffb703;
+    }
+
+    /* ================= SLIDER ================= */
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .slides {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      transition: margin-left 0.5s ease;
+    }
+    .slides img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 1;
+    }
+
+    .welcome {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 5px #000;
+      z-index: 2;
+    }
+
+    .btn {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-color);
+      color: #000;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 12px 26px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      z-index: 2;
+    }
+    .btn:hover {
+      background: var(--hover-color);
+      color: #fff;
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+    .dots button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: none;
+      background: #fff;
+      opacity: 0.5;
+      cursor: pointer;
+    }
+    .dots button.active {
+      background: var(--accent-color);
+      opacity: 1;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #fff;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body class="theme-orange">
+
+  <header>
+    <div class="logo">
+      <img src="images/super-slice-logo.png" alt="Super Slice Logo">
+      <div class="logo-text">
+        <h1 id="logoTitle">SUPER SLICE</h1>
+        <p id="logoTagline">One Slice, Endless Flavor</p>
+      </div>
+    </div>
+    <nav id="navMenu">
+      <a href="#"><span class="material-icons">home</span> <span class="nav-text" data-en="Home" data-ar="الرئيسية">Home</span></a>
+      <a href="order.html" class="active"><span class="material-icons">shopping_cart</span> <span class="nav-text" data-en="Order" data-ar="اطلب الآن">Order</span></a>
+      <a href="Contact.html"><span class="material-icons">phone</span> <span class="nav-text" data-en="Contact" data-ar="تواصل">Contact</span></a>
+      <a href="#"><span class="material-icons">login</span> <span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span></a>
+      <a href="#"><span class="material-icons">person_add</span> <span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span></a>
+    </nav>
+    <div class="controls">
+      <button class="theme-toggle" id="themeBtn"></button>
+      <button class="lang-toggle" id="langBtn">AR</button>
+    </div>
+  </header>
+
+  <section class="slider">
+    <div class="slides" id="slides">
+	<!--
+	 <img src="images/sliderImage1.jpeg" />
+      <img src="images/sliderImage2.jpeg" />
+      <img src="images/sliderImage3.jpeg" />
+	  	  -->
+
+      <img src="https://images.pexels.com/photos/1435907/pexels-photo-1435907.jpeg" />
+      <img src="https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg" />
+      <img src="https://images.pexels.com/photos/4109084/pexels-photo-4109084.jpeg" />
+    </div>
+    <div class="overlay"></div>
+    <div class="welcome" id="welcomeMsg">
+      Welcome <br> One Slice, Endless Flavor
+    </div>
+    <!--<button class="btn" id="orderBtn" data-en="Order Now" data-ar="اطلب الآن">Order Now</button> -->
+<a href="order.html" class="btn" data-en="Order Now" data-ar="اطلب الآن">Order Now</a>
+   
+   <div class="dots" id="dots"></div>
+    <footer id="footerText">© 2025 Super Slice. All rights reserved.</footer>
+  </section>
+
+  <script>
+    const langBtn = document.getElementById("langBtn");
+    const navTexts = document.querySelectorAll(".nav-text");
+    const logoTitle = document.getElementById("logoTitle");
+    const logoTagline = document.getElementById("logoTagline");
+    const welcomeMsg = document.getElementById("welcomeMsg");
+    const orderBtn = document.getElementById("orderBtn");
+    const footerText = document.getElementById("footerText");
+    let isEnglish = true;
+
+    langBtn.addEventListener("click", () => {
+      if (isEnglish) {
+        document.body.dir = "rtl";
+        langBtn.textContent = "EN";
+        logoTitle.textContent = "سوبر سلايس";
+        logoTagline.textContent = "شريحة واحدة، نكهة لا تنتهي";
+        welcomeMsg.innerHTML = "أهلاً وسهلاً <br> شريحة واحدة، نكهة لا تنتهي";
+        footerText.textContent = "© ٢٠٢٥ سوبر سلايس. جميع الحقوق محفوظة.";
+        navTexts.forEach(span => span.textContent = span.dataset.ar);
+        orderBtn.textContent = orderBtn.dataset.ar;
+      } else {
+        document.body.dir = "ltr";
+        langBtn.textContent = "AR";
+        logoTitle.textContent = "SUPER SLICE";
+        logoTagline.textContent = "One Slice, Endless Flavor";
+        welcomeMsg.innerHTML = "Welcome <br> One Slice, Endless Flavor";
+        footerText.textContent = "© 2025 Super Slice. All rights reserved.";
+        navTexts.forEach(span => span.textContent = span.dataset.en);
+        orderBtn.textContent = orderBtn.dataset.en;
+      }
+      isEnglish = !isEnglish;
+    });
+
+    // Theme toggle
+    const themeBtn = document.getElementById("themeBtn");
+    themeBtn.addEventListener("click", () => {
+      if (document.body.classList.contains("theme-orange")) {
+        document.body.classList.remove("theme-orange");
+        document.body.classList.add("theme-blue");
+      } else {
+        document.body.classList.remove("theme-blue");
+        document.body.classList.add("theme-orange");
+      }
+    });
+
+    // Slider
+    const slides = document.getElementById("slides");
+    const dotsContainer = document.getElementById("dots");
+    const total = slides.children.length;
+    let index = 0;
+
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement("button");
+      if (i === 0) dot.classList.add("active");
+      dot.dataset.index = i;
+      dot.addEventListener("click", () => {
+        index = i;
+        updateSlider();
+      });
+      dotsContainer.appendChild(dot);
+    }
+
+    function updateSlider() {
+      slides.style.marginLeft = `-${index * 100}%`;
+      [...dotsContainer.children].forEach(d => d.classList.remove("active"));
+      dotsContainer.children[index].classList.add("active");
+    }
+
+    setInterval(() => {
+      index = (index + 1) % total;
+      updateSlider();
+    }, 4000);
+  </script>
+</body>
+</html>

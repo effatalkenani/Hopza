@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Super Slice | Contact Us</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+  :root {
+    --accent-color: #ffb703;
+    --hover-color: #219ebc;
+  }
+  body.theme-orange {
+    --accent-color: #ffb703;
+    --hover-color: #219ebc;
+  }
+  body.theme-blue {
+    --accent-color: #219ebc;
+    --hover-color: #ffb703;
+  }
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #000;
+    color: #fff;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 40px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo img {
+    height: 48px;
+  }
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .logo-text h1 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+  .logo-text p {
+    margin: 0;
+    font-size: 0.9rem;
+    font-style: italic;
+    opacity: 0.8;
+  }
+
+  nav {
+    display: flex;
+    gap: 22px;
+  }
+  nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: 0.3s;
+  }
+  nav a:hover, nav a.active {
+    color: var(--accent-color);
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .theme-toggle {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    cursor: pointer;
+  }
+  body.theme-orange .theme-toggle { background: #219ebc; }
+  body.theme-blue .theme-toggle { background: #ffb703; }
+  .lang-toggle {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    background: var(--accent-color);
+    color: #000;
+    font-weight: bold;
+  }
+
+  /* ===== CONTACT ===== */
+  #contactSection {
+    background: url('images/sliderImage2.jpeg') center/cover no-repeat;
+    position: relative;
+    min-height: 100vh;
+    padding: 120px 30px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #contactSection::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+  }
+  .contact-container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    background: rgba(20,20,20,0.9);
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 2;
+  }
+  .contact-info {
+    flex: 1;
+    min-width: 320px;
+    padding: 40px;
+    background: #000;
+  }
+  .contact-info h2 {
+    color: var(--accent-color);
+    margin-bottom: 10px;
+  }
+  .info-box {
+    display: flex;
+    align-items: flex-start;
+    margin: 15px 0;
+  }
+  .icon {
+    font-size: 24px;
+    margin-right: 10px;
+    color: var(--accent-color);
+  }
+  .map-box img {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 20px;
+    border: 1px solid #333;
+  }
+  .contact-form {
+    flex: 1;
+    min-width: 320px;
+    padding: 40px;
+    background: #111;
+  }
+  .contact-form h3 {
+    text-align: center;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+  }
+  input, select, textarea {
+    width: 100%;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: #222;
+    color: #fff;
+  }
+  .phone-group {
+    display: flex;
+    gap: 6px;
+  }
+  button {
+    width: 100%;
+    background: var(--accent-color);
+    color: #000;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button:hover {
+    background: var(--hover-color);
+    color: #fff;
+  }
+  footer {
+    background: #000;
+    text-align: center;
+    padding: 15px;
+    border-top: 2px solid var(--accent-color);
+    color: #888;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body class="theme-orange">
+
+<header>
+  <div class="logo">
+    <img src="images/super-slice-logo.png" alt="Super Slice Logo">
+    <div class="logo-text">
+      <h1>SUPER SLICE</h1>
+      <p>One Slice, Endless Flavor</p>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html"><span class="material-icons">home</span> Home</a>
+    <a href="order.html"><span class="material-icons">shopping_cart</span> Order</a>
+    <a href="contact.html" class="active"><span class="material-icons">call</span> Contact</a>
+    <a href="#"><span class="material-icons">login</span> Login</a>
+    <a href="#"><span class="material-icons">person_add</span> Register</a>
+  </nav>
+  <div class="controls">
+    <button class="theme-toggle" id="themeBtn"></button>
+    <button class="lang-toggle" id="langBtn">AR</button>
+  </div>
+</header>
+
+<section id="contactSection">
+  <div class="contact-container">
+    <div class="contact-info">
+      <h2 id="contactTitle">Contact Us</h2>
+      <p id="contactIntro">We’d love to hear from you. Reach us anytime!</p>
+      <div class="info-box"><span class="icon material-icons">place</span><div><b>Address</b><br>Al Admiral, Cardiff</div></div>
+      <div class="info-box"><span class="icon material-icons">phone</span><div><b>Phone</b><br>+966599116484</div></div>
+      <div class="info-box"><span class="icon material-icons">email</span><div><b>Email</b><br>alhajjajia@cardiff.ac.uk</div></div>
+      <div class="map-box"><img src="images/cardiff-map.jpg" alt="Map of Cardiff"></div>
+    </div>
+
+    <div class="contact-form">
+      <h3 id="formTitle">Send Message</h3>
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <div class="phone-group">
+          <select id="countryCode">
+            <option value="+966">🇸🇦 +966</option>
+            <option value="+44">🇬🇧 +44</option>
+          </select>
+          <input type="text" id="phone" placeholder="Phone Number" required>
+        </div>
+        <input type="text" id="address" placeholder="Address" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <textarea id="message" placeholder="Type your message..." required></textarea>
+        <button type="submit" id="sendBtn">Send</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>© 2025 Super Slice. All rights reserved.</footer>
+
+<script>
+let isEN = true;
+document.getElementById('contactForm').addEventListener('submit', e => {
+  e.preventDefault();
+  document.querySelectorAll('#contactForm input, #contactForm textarea').forEach(el => el.value = '');
+  alert(isEN ? 'Your message has been sent!' : 'تم إرسال رسالتك بنجاح!');
+});
+
+document.getElementById('themeBtn').addEventListener('click', () => {
+  document.body.classList.toggle('theme-blue');
+  document.body.classList.toggle('theme-orange');
+});
+
+document.getElementById('langBtn').addEventListener('click', () => {
+  isEN = !isEN;
+  document.getElementById('langBtn').innerText = isEN ? 'AR' : 'EN';
+  updateContactLang();
+});
+
+function updateContactLang() {
+  if (isEN) {
+    document.getElementById('contactTitle').innerText = 'Contact Us';
+    document.getElementById('contactIntro').innerText = 'We’d love to hear from you. Reach us anytime!';
+    document.getElementById('formTitle').innerText = 'Send Message';
+    document.getElementById('sendBtn').innerText = 'Send';
+  } else {
+    document.getElementById('contactTitle').innerText = 'اتصل بنا';
+    document.getElementById('contactIntro').innerText = 'يسعدنا تواصلك معنا في أي وقت!';
+    document.getElementById('formTitle').innerText = 'أرسل رسالة';
+    document.getElementById('sendBtn').innerText = 'إرسال';
+  }
+}
+</script>
+
+</body>
+</html>

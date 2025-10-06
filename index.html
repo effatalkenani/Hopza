@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- تفعيل عرض متجاوب على الجوال -->
+  <!-- Enable responsive viewport on mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Super Slice</title>
+
+  <!-- أيقونات ماتيريال (مسموح كـ Web Font؛ ليست مكتبة JS) -->
+  <!-- Google Material Icons (web font, not a JS library) -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- الأنماط العامة + الصفحة الرئيسية -->
+  <!-- Global styles + home page styles -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body class="theme-orange">
+  <!-- رابط تخطي للمحتوى لتحسين الوصول -->
+  <!-- Skip link for accessibility -->
+  <a href="#main" class="skip-link" aria-label="Skip to content">Skip to content</a>
+
+  <!-- ===== Header (مُوحَّد) / Unified Header ===== -->
+  <header class="site-header" role="banner" aria-label="Site header">
+    <div class="logo" tabindex="0">
+      <img src="images/super-slice-logo.png" alt="Super Slice Logo" />
+      <div class="logo-text">
+        <h1 id="logoTitle">SUPER SLICE</h1>
+        <p id="logoTagline">One Slice, Endless Flavor</p>
+      </div>
+    </div>
+
+    <nav id="topNav" class="main-nav" role="navigation" aria-label="Main navigation">
+      <a href="index.html" class="active">
+        <span class="material-icons" aria-hidden="true">home</span>
+        <span class="nav-text" data-en="Home" data-ar="الرئيسية">Home</span>
+      </a>
+      <a href="order.html">
+        <span class="material-icons" aria-hidden="true">shopping_cart</span>
+        <span class="nav-text" data-en="Order" data-ar="اطلب الآن">Order</span>
+      </a>
+      <a href="contact.html">
+        <span class="material-icons" aria-hidden="true">call</span>
+        <span class="nav-text" data-en="Contact" data-ar="تواصل">Contact</span>
+      </a>
+      <a href="#">
+        <span class="material-icons" aria-hidden="true">login</span>
+        <span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span>
+      </a>
+      <a href="#">
+        <span class="material-icons" aria-hidden="true">person_add</span>
+        <span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span>
+      </a>
+    </nav>
+
+    <div class="controls">
+      <!-- زر نمط الوصول (تكبير النص/تباين) -->
+      <!-- Accessibility quick toggle -->
+      
+      <!-- زر تغيير الثيم -->
+      <!-- Theme toggle -->
+      <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme"></button>
+      <!-- زر تغيير اللغة -->
+      <!-- Language toggle -->
+      <button class="lang-toggle" id="langBtn" aria-label="Toggle Language">AR</button>
+    </div>
+  </header>
+
+  <!-- ===== Slider Section ===== -->
+  <main id="main" class="slider" role="main">
+    <div class="slides" id="slides" aria-live="polite">
+      <img src="images/sliderImage1.jpeg" alt="Fresh veggie pizza" />
+      <img src="images/sliderImage2.jpeg" alt="Classic margherita pizza" />
+      <img src="images/sliderImage3.jpeg" alt="Hot pepperoni pizza" />
+    </div>
+    <div class="overlay" aria-hidden="true"></div>
+
+    <div class="welcome" id="welcomeMsg" tabindex="0">
+      Welcome <br> One Slice, Endless Flavor
+    </div>
+
+    <a href="order.html" class="btn" data-en="Order Now" data-ar="اطلب الآن" aria-label="Order Now">
+      Order Now
+    </a>
+
+    <div class="dots" id="dots" role="tablist" aria-label="Slider dots"></div>
+
+    <footer id="footerText" class="site-footer" role="contentinfo">
+      © 2025 Super Slice. All rights reserved. · <span aria-label="Accessibility Statement">♿ This website is accessibility-friendly</span>
+    </footer>
+  </main>
+
+  <!-- سكربت مشترك (الثيم/اللغة/الهيدر) -->
+  <!-- Common JS (theme/lang/header) -->
+  <script src="js/common.js"></script>
+</body>
+</html>

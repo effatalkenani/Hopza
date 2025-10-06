@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Super Slice | Contact Us</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/base.css"/>
+  <link rel="stylesheet" href="css/contact.css"/>
+</head>
+<body class="theme-orange">
+
+<header>
+  <div class="logo">
+    <img src="images/super-slice-logo.png" alt="Super Slice Logo">
+    <div class="logo-text">
+      <h1 data-en="SUPER SLICE" data-ar="سوبر سلايس">SUPER SLICE</h1>
+      <p data-en="One Slice, Endless Flavor" data-ar="شريحة واحدة، نكهة لا تنتهي">One Slice, Endless Flavor</p>
+    </div>
+  </div>
+  <nav>
+    <a href="index.html"><span class="material-icons">home</span> <span class="nav-text" data-en="Home" data-ar="الرئيسية">Home</span></a>
+    <a href="order.html"><span class="material-icons">shopping_cart</span> <span class="nav-text" data-en="Order" data-ar="اطلب الآن">Order</span></a>
+    <a href="contact.html" class="active"><span class="material-icons">call</span> <span class="nav-text" data-en="Contact" data-ar="تواصل">Contact</span></a>
+    <a href="#"><span class="material-icons">login</span> <span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span></a>
+    <a href="#"><span class="material-icons">person_add</span> <span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span></a>
+  </nav>
+  <div class="controls">
+    <!-- زر نمط الوصول (تكبير النص/تباين) -->
+      <!-- Accessibility quick toggle -->
+      
+      <!-- زر تغيير الثيم -->
+      <!-- Theme toggle -->
+      <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme"></button>
+      <!-- زر تغيير اللغة -->
+      <!-- Language toggle -->
+      <button class="lang-toggle" id="langBtn" aria-label="Toggle Language">AR</button>
+  </div>
+</header>
+
+<div class="page-wrap">
+  <section id="contactSection">
+    <div class="contact-container">
+      <!-- Left Info -->
+      <div class="contact-info">
+        <h2 id="contactTitle">Contact Us</h2>
+        <p id="contactIntro">We’d love to hear from you. Reach us anytime!</p>
+
+        <div class="info-row">
+          <span class="icon material-icons" aria-hidden="true">place</span>
+          <span class="label" data-en="Address" data-ar="العنوان">Address</span>
+          <span class="value">Al Admiral, Cardiff</span>
+        </div>
+
+        <div class="info-row">
+          <span class="icon material-icons" aria-hidden="true">phone</span>
+          <span class="label" data-en="Phone" data-ar="الجوال">Phone</span>
+          <span class="value" dir="ltr">+966599116484</span>
+        </div>
+
+        <div class="info-row">
+          <span class="icon material-icons" aria-hidden="true">email</span>
+          <span class="label" data-en="Email" data-ar="البريد">Email</span>
+          <span class="value">alhajjajia@cardiff.ac.uk</span>
+        </div>
+
+        <div class="map-box">
+          <img src="images/cardiff-map.jpg" alt="Map to our location in Cardiff">
+        </div>
+      </div>
+
+      <!-- Right Form -->
+      <div class="contact-form">
+        <h3 id="formTitle">Send Message</h3>
+        <form id="contactForm" novalidate>
+          <input type="text" id="name" placeholder="Full Name" required aria-label="Full Name">
+          <div class="phone-group">
+            <select id="countryCode" aria-label="Country code">
+              <option value="+966">🇸🇦 +966</option>
+              <option value="+44">🇬🇧 +44</option>
+            </select>
+            <input type="text" id="phone" placeholder="Phone Number" required inputmode="tel" aria-label="Phone Number">
+          </div>
+          <input type="text" id="address" placeholder="Address" required aria-label="Address">
+          <input type="email" id="email" placeholder="Email" required aria-label="Email">
+          <textarea id="message" placeholder="Type your message..." required aria-label="Message"></textarea>
+          <button type="submit" id="sendBtn">Send</button>
+          <div class="hint" id="replyHint" aria-live="polite">We reply within 1-2 business days.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+<footer>
+  <div id="footerText"></div>
+</footer>
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+/* ========= Base Theme Vars ========= */
+/* EN: Main color variables (theme can swap values). */
+/* AR: متغيرات الألوان الأساسية (الثيم يبدّل القيم). */
+:root{
+  --accent-color:#ffb703; /* orange */
+  --hover-color:#219ebc;  /* blue  */
+  --bg:#000; --text:#fff;
+  --panel:#111; --line:#2b2b2b;
+}
+body.theme-blue{
+  --accent-color:#219ebc;
+  --hover-color:#ffb703;
+}
+
+/* ========= Global Reset ========= */
+/* EN: Basic reset and typography. */
+/* AR: تهيئة عامة والخط. */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+
+/* ========= Accessibility Helpers ========= */
+/* EN: Helpers for screen-readers and focus visibility. */
+/* AR: مساعدات لقارئ الشاشة وإظهار التركيز. */
+.visually-hidden{position:absolute;left:-9999px}
+:focus-visible{outline:2px dashed var(--accent-color);outline-offset:3px}
+
+/* ========= Header (Unified) ========= */
+/* EN: Same header across pages, sticky, glass effect. */
+/* AR: هيدر موحد بكل الصفحات مع تأثير زجاجي وتثبيت. */
+header{
+	
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 40px;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.logo{display:flex;align-items:center;gap:12px}
+.logo img{height:48px;object-fit:contain}
+.logo-text{display:flex;flex-direction:column;line-height:1.25}
+.logo-text h1{margin:0;font-size:1.25rem;font-weight:700}
+.logo-text p{margin:0;font-size:.9rem;opacity:.85;font-style:italic}
+
+nav{display:flex;align-items:center;gap:22px}
+nav a{
+  text-decoration:none;color:#fff;font-weight:bold;display:flex;align-items:center;gap:6px;transition:.25s;
+}
+nav a:hover,nav a.active{color:var(--accent-color)}
+nav .material-icons{font-size:20px}
+
+.controls{display:flex;align-items:center;gap:10px;margin-left:20px}
+#langBtn{
+  padding:6px 14px;border-radius:20px;border:none;cursor:pointer;font-weight:700;
+  background:var(--accent-color);color:#000;transition:.25s;
+}
+#langBtn:hover{background:var(--hover-color);color:#fff}
+#themeBtn{
+  width:38px;height:38px;border-radius:50%;border:2px solid #fff;cursor:pointer;
+  background:var(--hover-color);
+}
+body.theme-blue #themeBtn{background:var(--accent-color)}
+
+/* ========= Footer (Unified) ========= */
+/* EN: Unified footer with accessibility line. */
+/* AR: فوتر موحد مع سطر دعم الوصول. */
+footer {
+  text-align: center;
+  padding: 18px 12px;
+  color: #aaa;
+  background: transparent !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  margin-top: 40px; /* ← هذا يحل المشكلة */
+}
+
+
+
+.footer-a11y{display:block;margin-top:6px;color:#bbb;font-size:.9rem}
+
+/* ========= Sections Spacing ========= */
+/* EN: Push content below fixed header. */
+/* AR: إزاحة المحتوى لتحت الهيدر المثبت. */
+.page-wrap{padding-top:88px}
+
+/* ========= Responsive ========= */
+/* EN: Simple responsive tune-ups. */
+/* AR: تحسينات استجابة بسيطة. */
+@media (max-width:900px){
+  header{padding:10px 16px}
+  .logo-text h1{font-size:1.05rem}
+  nav{gap:14px}
+}
+
+#dots {
+  margin-bottom: 40px; /* ← نرفع الدوائر فوق الفوتر بمسافة واضحة */
+}
+

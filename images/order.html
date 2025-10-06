@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Super Slice – Order</title>
+
+<!-- Google Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<style>
+  :root{
+    --accent:#ffb703;
+    --accent-2:#219ebc;
+    --bg:#111; --panel:#1b1b1b; --card:#222; --line:#2b2b2b; --text:#fff; --muted:#bfbfbf;
+  }
+  body.theme-blue{ --accent:#219ebc; --accent-2:#ffb703; }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+
+  /* HEADER */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 40px;
+    background:rgba(0,0,0,0.65);
+    backdrop-filter:blur(6px);
+  }
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo img{height:50px;object-fit:contain}
+  .logo-text{display:flex;flex-direction:column;line-height:1.3}
+  .logo-text h1{margin:0;font-size:1.4rem;font-weight:bold;}
+  .logo-text p{margin:0;font-size:0.9rem;font-style:italic;opacity:.85;}
+
+  nav{display:flex;align-items:center;gap:25px;}
+  nav a{
+    text-decoration:none;color:#fff;font-weight:bold;
+    display:flex;align-items:center;gap:6px;transition:0.3s;
+  }
+  nav a:hover,nav a.active{color:var(--accent);}
+  nav a .material-icons{font-size:20px;color:#fff;}
+
+  .controls{display:flex;align-items:center;gap:10px;}
+  #langBtn{background:var(--accent);color:#000;border:none;border-radius:20px;padding:6px 14px;font-weight:bold;cursor:pointer;}
+  #langBtn:hover{background:var(--accent-2);color:#fff;}
+  #themeBtn{width:38px;height:38px;border-radius:50%;border:2px solid #fff;background:var(--accent-2);cursor:pointer;}
+  body.theme-blue #themeBtn{background:var(--accent);}
+
+  /* MAIN */
+  main{display:flex;gap:38px;justify-content:space-between;padding:120px 50px 40px;}
+  .menu{flex:2;background:var(--panel);border-radius:12px;padding:18px 18px 8px;box-shadow:0 0 10px rgba(0,0,0,.35);}
+  .basket{flex:1;background:#1a1a1a;border-radius:12px;padding:18px;box-shadow:0 0 10px rgba(0,0,0,.35);}
+  .basket h2{margin:8px 0 12px;border-bottom:1px solid var(--line);padding-bottom:10px;}
+
+  /* FILTER BAR */
+  .menu-header{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;}
+  .filters{display:flex;gap:20px;align-items:center;}
+  label{font-size:.95rem;color:var(--muted);}
+  select{
+    appearance:none;background:#101010;color:#fff;border:1px solid var(--line);
+    border-radius:8px;padding:8px 34px 8px 10px;
+  }
+  .select-wrap{position:relative;}
+  .select-wrap:after{
+    content:"▾";position:absolute;right:10px;top:50%;translate:0 -50%;color:var(--muted);pointer-events:none;
+  }
+
+  .filters-divider{
+    height:2px;margin:12px -18px 10px;
+    background:linear-gradient(90deg,transparent,var(--accent),transparent);
+    opacity:.4;
+  }
+
+  /* GRID */
+  .menu-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;}
+  .item{background:var(--card);border-radius:12px;overflow:hidden;transition:transform .25s, box-shadow .25s;}
+  .item:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.25);}
+  .info{padding:12px 14px;}
+  .title{margin:0;font-size:1rem;}
+  .price{color:var(--accent);font-weight:bold;margin-top:4px;}
+  .cal{color:var(--muted);font-size:.85rem;}
+  .actions{margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
+  .qty{display:flex;align-items:center;gap:6px;}
+  .qty button{width:26px;height:26px;border-radius:50%;border:none;background:var(--accent-2);color:#fff;cursor:pointer;}
+  .add{border:none;background:var(--accent);color:#000;font-weight:bold;border-radius:6px;padding:7px 12px;cursor:pointer;}
+  .add:hover{background:var(--accent-2);color:#fff;}
+
+  /* BASKET */
+  .basket-item{display:flex;justify-content:space-between;align-items:center;margin:10px 0;}
+  .rm{background:#e53935;color:#fff;border:none;border-radius:4px;padding:2px 8px;cursor:pointer;}
+  .total{margin-top:12px;border-top:1px solid var(--line);padding-top:10px;font-weight:bold;}
+  .place{margin-top:12px;width:100%;border:none;background:var(--accent);color:#000;font-weight:bold;border-radius:8px;padding:11px;cursor:pointer;}
+  .place:hover{background:var(--accent-2);color:#fff;}
+
+/* إصلاح تمدد الصور داخل القائمة */
+.menu-items img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--line);
+  display: block;
+  border-radius: 12px 12px 0 0;
+}
+
+  footer{color:#aaa;text-align:center;padding:16px;}
+  
+  
+  
+  
+  
+
+
+/* --- Order Popup --- */
+#orderPopup {
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  z-index:3000;
+  align-items:center;
+  justify-content:center;
+}
+.popup-box {
+  background:var(--panel);
+  border-radius:12px;
+  padding:25px 30px;
+  width:400px;
+  max-width:90%;
+  color:var(--text);
+  box-shadow:0 0 20px rgba(0,0,0,.5);
+  animation:fadeIn .3s ease;
+  position:relative;
+}
+.popup-box h3 {
+  color:var(--accent);
+  margin-bottom:12px;
+  text-align:center;
+}
+.popup-box input, .popup-box select, .popup-box textarea {
+  width:100%;
+  margin:6px 0 12px;
+  padding:8px;
+  border-radius:6px;
+  border:1px solid var(--line);
+  background:#111;
+  color:#fff;
+  resize:none;
+}
+.popup-box textarea {height:70px;}
+.popup-box .buttons {
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+}
+.popup-box button {
+  border:none;
+  border-radius:6px;
+  padding:8px 14px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.popup-box .cancel {background:#444;color:#fff;}
+.popup-box .next {background:var(--accent);color:#000;}
+.popup-box .back {background:#555;color:#fff;}
+.popup-box .confirm {background:var(--accent-2);color:#fff;}
+.close-btn {
+  position:absolute;
+  top:8px;
+  right:10px;
+  font-size:20px;
+  color:#fff;
+  cursor:pointer;
+}
+.flag-option {display:flex;align-items:center;gap:4px;}
+.flag-option img {
+  width:20px;
+  height:14px;
+  object-fit:cover;
+  border-radius:2px;
+}
+@keyframes fadeIn {from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:translateY(0);}}
+
+</style>
+</head>
+<body class="theme-orange">
+
+<header>
+  <div class="logo">
+    <img src="images/super-slice-logo.png" alt="Super Slice logo">
+    <div class="logo-text">
+      <h1 id="brand">SUPER SLICE</h1>
+      <p id="tagline">One Slice, Endless Flavor</p>
+    </div>
+  </div>
+
+  <nav id="topNav">
+    <a href="index.html"><span class="material-icons">home</span><span data-en="Home" data-ar="الرئيسية">Home</span></a>
+    <a href="#" class="active"><span class="material-icons">shopping_cart</span><span data-en="Order" data-ar="اطلب الآن">Order</span></a>
+    <a href="Contact.html"><span class="material-icons">phone</span><span data-en="Contact" data-ar="تواصل">Contact</span></a>
+    <a href="#"><span class="material-icons">login</span><span data-en="Login" data-ar="تسجيل الدخول">Login</span></a>
+    <a href="#"><span class="material-icons">person_add</span><span data-en="Register" data-ar="تسجيل">Register</span></a>
+  </nav>
+
+  <div class="controls">
+    <button id="themeBtn"></button>
+    <button id="langBtn">AR</button>
+  </div>
+</header>
+
+<main>
+  <section class="menu">
+    <div class="menu-header">
+      <h2 id="menuTitle" style="margin:6px 0 2px;">Menu</h2>
+      <div class="filters">
+        <div class="select-wrap">
+          <label id="catLabel">Category:</label>
+          <select id="category">
+            <option value="pizza" data-en="Pizza" data-ar="بيتزا">Pizza</option>
+            <option value="pasta" data-en="Pasta" data-ar="باستا">Pasta</option>
+            <option value="drinks" data-en="Drinks" data-ar="مشروبات">Drinks</option>
+          </select>
+        </div>
+        <div class="select-wrap">
+          <label id="sortLabel">Sort by:</label>
+          <select id="sort">
+            <option value="name" data-en="Name" data-ar="الاسم">Name</option>
+            <option value="price" data-en="Price" data-ar="السعر">Price</option>
+            <option value="calories" data-en="Calories" data-ar="السعرات">Calories</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="filters-divider"></div>
+    <div id="grid" class="menu-items"></div>
+  </section>
+
+  <aside class="basket">
+    <h2 id="basketTitle">Your Basket</h2>
+    <div id="basketList"></div>
+    <div class="total"><span id="totalLabel">Total:</span> $<span id="total">0.00</span></div>
+    <button class="place" id="placeBtn">Place Order</button>
+  </aside>
+</main>
+
+<footer id="foot">© 2025 Super Slice. All rights reserved.</footer>
+
+
+
+
+
+
+<!-- === Order Popup === -->
+<div id="orderPopup">
+  <div class="popup-box" id="step1">
+    <span class="close-btn" onclick="closePopup()">×</span>
+    <h3 id="enterDetails">Enter Your Details</h3>
+
+    <input id="custName" placeholder="Full Name" type="text" required>
+
+    <div style="display:flex;gap:6px;">
+      <select id="countryCode" style="flex:1">
+        <option value="+966">🇸🇦 +966</option>
+        <option value="+44">🇬🇧 +44</option>
+      </select>
+      <input id="phone" placeholder="Phone Number" style="flex:2" type="text">
+    </div>
+
+    <input id="email" placeholder="Email" type="email">
+    <textarea id="address" placeholder="Address (Optional)"></textarea>
+
+    <div class="buttons">
+      <button class="cancel" onclick="closePopup()" id="cancelBtn">Cancel</button>
+      <button class="next" onclick="nextStep(2)" id="continueBtn">Continue</button>
+    </div>
+  </div>
+
+  <div class="popup-box" id="step2" style="display:none;">
+    <span class="close-btn" onclick="closePopup()">×</span>
+    <h3 id="paymentTitle">Payment Method</h3>
+
+    <select id="paymentMethod">
+      <option value="cash">💵 Cash on Delivery</option>
+      <option value="card">💳 Credit/Debit Card</option>
+    </select>
+
+    <div id="cardFields" style="display:none;">
+      <input id="cardNumber" placeholder="Card Number" maxlength="16" type="text">
+      <input id="cardExpiry" placeholder="MM/YY" type="text">
+      <input id="cardCVV" placeholder="CVV" maxlength="3" type="text">
+    </div>
+
+    <div class="buttons">
+      <button class="back" onclick="nextStep(1)" id="backBtn">Back</button>
+      <button class="next" onclick="nextStep(3)" id="nextBtn">Next</button>
+    </div>
+  </div>
+
+  <div class="popup-box" id="step3" style="display:none;">
+    <span class="close-btn" onclick="closePopup()">×</span>
+    <h3 id="confirmTitle">Confirm Your Order</h3>
+    <p id="orderSummaryText">Order summary will appear here.</p>
+
+    <div class="buttons" id="confirmButtons">
+      <button class="back" onclick="nextStep(2)" id="backConfirmBtn">Back</button>
+      <button class="confirm" onclick="finishOrder()" id="confirmBtn">Confirm</button>
+    </div>
+
+    <div id="afterConfirm" style="display:none;text-align:center;margin-top:10px;">
+      <button class="next" onclick="downloadPDF()">📄 Download Invoice</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+/*
+ =========================
+   بيانات القائمة الأصلية
+========================= 
+const menuData = {
+  pizza: [
+    {name:"Margherita",price:8.5,cal:800,img:"images/Margherita.jpeg"},
+    {name:"Pepperoni",price:9.5,cal:950,img:"images/Pepperoni.jpeg"},
+    {name:"Hawaiian",price:9.0,cal:870,img:"images/Hawaiian.jpeg"},
+    {name:"Cheese Lovers Pizza",price:10.5,cal:900,img:"images/Cheese Lovers Pizza.jpeg"},
+    {name:"BBQ Chicken",price:10.0,cal:1020,img:"images/BBQ Chicken.jpeg"},
+    {name:"Veggie",price:8.0,cal:740,img:"images/Veggie.jpeg"},
+    {name:"Sweet Corn Pizza",price:11.5,cal:990,img:"images/Sweet Corn Pizza.png"},
+    {name:"Mushroom Delight",price:9.8,cal:860,img:"images/Mushroom Delight.jpeg"},
+    {name:"Mexican",price:12.0,cal:1100,img:"images/Mexican.jpeg"},
+    {name:"Cheddar Melt Pizza",price:13.5,cal:980,img:"images/Cheddar Melt Pizza.jpeg"}
+  ],
+  pasta: [
+    {name:"Alfredo",price:7.5,cal:700,img:"images/Alfredo.jpeg"},
+    {name:"Arrabbiata",price:7.8,cal:780,img:"images/Arrabbiata.jpeg"},
+    {name:"Rose Pasta with Chicken",price:9.0,cal:920,img:"images/Rose Pasta with Chicken.png"},
+    {name:"Bolognese",price:8.5,cal:850,img:"images/Bolognese.jpeg"},
+    {name:"Farfalle Pasta",price:8.0,cal:780,img:"images/Farfalle Pasta.jpg"},
+    {name:"Pink Sauce Pasta",price:9.2,cal:870,img:"images/Pink Sauce Pasta.jpg"},
+    {name:"Lemon Chicken Pasta with Broccoli",price:10.0,cal:950,img:"images/Lemon Chicken Pasta with Broccoli.png"},
+    {name:"Bacon & Pea Orecchiette",price:7.3,cal:690,img:"images/Bacon & Pea Orecchiette.jpg"},
+    {name:"Crab Lemon Tagliatelle",price:11.5,cal:980,img:"images/Crab Lemon Tagliatelle.png"},
+    {name:"Stracciatella Tagliatelle",price:11.0,cal:1000,img:"images/Stracciatella Tagliatelle.jpg"}
+  ],
+  drinks: [
+    {name:"Water",price:1.0,cal:0,img:"images/Water.jpeg"},
+    {name:"Apple Juice",price:2.2,cal:115,img:"images/Apple Juice.jpg"},
+    {name:"Cola",price:2.5,cal:150,img:"images/Cola.jpg"},
+    {name:"Cold chocolate",price:2.8,cal:250,img:"images/Cold chocolate.jpg"},
+    {name:"Strawberry Juice",price:3.2,cal:130,img:"images/Strawberry Juice.jpg"},
+    {name:"Mixed Fruit Juice",price:3.8,cal:140,img:"images/Mixed Fruit Juice.jpg"},
+    {name:"Pepsi Juice",price:3.7,cal:150,img:"images/Pepsi Juice.jpg"},
+    {name:"Cappuccino",price:2.9,cal:80,img:"images/Cappuccino.jpeg"},
+    {name:"Mango Juice",price:4.0,cal:150,img:"images/Mango Juice.jpg"},
+    {name:"Orange Juice",price:3.0,cal:110,img:"images/Orange Juice.jpg"}
+  ]
+};*/
+
+/*
+ =========================
+    بيانات القائمة الأصلية روابط
+========================= */
+const menuData = {
+  pizza: [
+    {name:"Margherita",price:8.5,cal:800,img:"https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg"},
+    {name:"Pepperoni",price:9.5,cal:950,img:"https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg"},
+    {name:"Hawaiian",price:9.0,cal:870,img:"https://images.pexels.com/photos/708587/pexels-photo-708587.jpeg"},
+    {name:"Cheese Lovers Pizza",price:10.5,cal:900,img:"https://images.pexels.com/photos/2619967/pexels-photo-2619967.jpeg"},
+    {name:"BBQ Chicken",price:10.0,cal:1020,img:"https://images.pexels.com/photos/774487/pexels-photo-774487.jpeg"},
+    {name:"Veggie",price:8.0,cal:740,img:"https://images.pexels.com/photos/1435907/pexels-photo-1435907.jpeg"},
+    {name:"Sweet Corn Pizza",price:11.5,cal:990,img:"https://dietitiandebbie.com/wp-content/uploads/2025/05/sweet-corn-pizza-6-1-1065x1536.jpg"},
+    {name:"Mushroom Delight",price:9.8,cal:860,img:"https://images.pexels.com/photos/5908229/pexels-photo-5908229.jpeg"},
+    {name:"Mexican",price:12.0,cal:1100,img:"https://images.pexels.com/photos/905847/pexels-photo-905847.jpeg"},
+    {name:"Cheddar Melt Pizza",price:13.5,cal:980,img:"https://images.pexels.com/photos/1260968/pexels-photo-1260968.jpeg"}
+  ],
+  pasta: [
+    {name:"Alfredo",price:7.5,cal:700,img:"https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg"},
+    {name:"Arrabbiata",price:7.8,cal:780,img:"https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg"},
+    {name:"Rose Pasta with Chicken",price:9.0,cal:920,img:"https://www.platingpixels.com/wp-content/uploads/2025/08/Rose-Pasta-with-Chicken-recipe-3.webp"},
+    {name:"Bolognese",price:8.5,cal:850,img:"https://images.pexels.com/photos/803963/pexels-photo-803963.jpeg"},
+    {name:"Farfalle Pasta",price:8.0,cal:780,img:"https://mccormick.widen.net/content/73nsorkvek/jpeg/italian_herb_pesto_farfalle_pasta02_2000x1125-copy.jpeg"},
+    {name:"Pink Sauce Pasta",price:9.2,cal:870,img:"https://pixelsandplates.com/wp-content/uploads/2021//09/pink-sauce-pasta-final-3.jpg"},
+    {name:"Lemon Chicken Pasta with Broccoli",price:10.0,cal:950,img:"https://www.platingpixels.com/wp-content/uploads/2016/04/Lightened-Up-Lemon-Broccoli-Chicken-Pasta-recipe-2.webp"},
+    {name:"Bacon & Pea Orecchiette",price:7.3,cal:690,img:"https://noplatelikehome.com/wp-content/uploads/IMG_4767-scaled.jpg"},
+    {name:"Crab Lemon Tagliatelle",price:11.5,cal:980,img:"https://www.appetitemag.co.uk/wp-content/uploads/2013/08/TAGLIATELLE.jpg.webp"},
+    {name:"Stracciatella Tagliatelle",price:11.0,cal:1000,img:"https://smilingcook.eu/wp-content/uploads/Pasta-Champignons-Straciatella.jpg"}
+  ],
+  drinks: [
+    {name:"Water",price:1.0,cal:0,img:"https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg"},
+    {name:"Apple Juice",price:2.2,cal:115,img:"https://plus.unsplash.com/premium_photo-1663089590359-6ec775dd518e?w=600"},
+    {name:"Cola",price:2.5,cal:150,img:"https://images.unsplash.com/photo-1624552184280-9e9631bbeee9?q=80"},
+    {name:"Cold chocolate",price:2.8,cal:250,img:"https://images.unsplash.com/photo-1626200949108-510618c118c3?q=80"},
+    {name:"Strawberry Juice",price:3.2,cal:130,img:"https://images.unsplash.com/photo-1543264228-460e284028a7?q=80"},
+    {name:"Mixed Fruit Juice",price:3.8,cal:140,img:"https://images.unsplash.com/photo-1617535394182-641e70651cd8?q=80"},
+    {name:"Pepsi Juice",price:3.7,cal:150,img:"https://images.unsplash.com/photo-1629203851288-7ececa5f05c4?q=80"},
+    {name:"Cappuccino",price:2.9,cal:80,img:"https://images.pexels.com/photos/302901/pexels-photo-302901.jpeg"},
+    {name:"Mango Juice",price:4.0,cal:150,img:"https://images.unsplash.com/photo-1697642452436-9c40773cbcbb?q=80"},
+    {name:"Orange Juice",price:3.0,cal:110,img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?q=80"}
+  ]
+};
+
+/* =========================
+   الترجمات الكاملة
+========================= */
+const textTrans = {
+  en: {
+    brand:"SUPER SLICE", tagline:"One Slice, Endless Flavor", menu:"Menu",
+    cat:"Category:", sort:"Sort by:", basket:"Your Basket",
+    total:"Total:", place:"Place Order", cal:"cal", add:"Add"
+  },
+  ar: {
+    brand:"سوبر سلايس", tagline:"شريحة واحدة، نكهة لا تنتهي", menu:"القائمة",
+    cat:"التصنيف:", sort:"الفرز حسب:", basket:"سلتك",
+    total:"الإجمالي:", place:"إتمام الطلب", cal:"سعرة حرارية", add:"أضف"
+  }
+};
+
+/* =========================
+   أسماء المنتجات بالعربي
+========================= */
+const namesAR = {
+  pizza: {"Margherita":"مارغريتا","Pepperoni":"ببروني","Hawaiian":"هاواي","Cheese Lovers Pizza":"بيتزا عشاق الجبن","BBQ Chicken":"دجاج باربكيو","Veggie":"خضار","Sweet Corn Pizza":"بيتزا الذرة الحلوة","Mushroom Delight":"بيتزا الفطر","Mexican":"مكسيكية","Cheddar Melt Pizza":"بيتزا شيدر"},
+  pasta: {"Alfredo":"ألفريدو","Arrabbiata":"أرابياتا","Rose Pasta with Chicken":"باستا الورد بالدجاج","Bolognese":"بولونيز","Farfalle Pasta":"فارفيلي","Pink Sauce Pasta":"باستا الصوص الوردي","Lemon Chicken Pasta with Broccoli":"باستا دجاج بالليمون والبروكلي","Bacon & Pea Orecchiette":"أوريكياتي بالبازلاء واللحم","Crab Lemon Tagliatelle":"تاغلياتيلي بالليمون والسرطان","Stracciatella Tagliatelle":"تاغلياتيلي بالجبنة والفطر"},
+  drinks: {"Water":"ماء","Apple Juice":"عصير تفاح","Cola":"كولا","Cold chocolate":"شوكولاتة باردة","Strawberry Juice":"عصير فراولة","Mixed Fruit Juice":"عصير مشكل","Pepsi Juice":"بيبسي","Cappuccino":"كابتشينو","Mango Juice":"عصير مانجو","Orange Juice":"عصير برتقال"}
+};
+
+function toArabic(n){return n.toString().replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);}
+
+/* =========================
+   واجهة وعرض القائمة
+========================= */
+let basket=[];
+const grid=document.getElementById('grid');
+const basketList=document.getElementById('basketList');
+const totalEl=document.getElementById('total');
+const category=document.getElementById('category');
+const sort=document.getElementById('sort');
+let isEN=true;
+
+function renderMenu(){
+  const cat=category.value;
+  const lang=isEN?'en':'ar';
+  let items=[...menuData[cat]];
+  const s=sort.value;
+  if(s==='name')items.sort((a,b)=>a.name.localeCompare(b.name));
+  if(s==='price')items.sort((a,b)=>a.price-b.price);
+  if(s==='calories')items.sort((a,b)=>a.cal-b.cal);
+
+  grid.innerHTML='';
+  items.forEach(it=>{
+    const name=isEN?it.name:(namesAR[cat][it.name]||it.name);
+    const price=isEN?`$${it.price.toFixed(2)}`:`${toArabic(it.price.toFixed(2))} دولار`;
+    const cal=isEN?`${it.cal} ${textTrans[lang].cal}`:`${toArabic(it.cal)} ${textTrans[lang].cal}`;
+    const card=document.createElement('article');
+    card.className='item';
+    card.innerHTML=`
+      <img src="${it.img}" alt="${name}">
+      <div class="info">
+        <h3 class="title">${name}</h3>
+        <div class="price">${price}</div>
+        <div class="cal">${cal}</div>
+        <div class="actions">
+          <div class="qty"><button>-</button><span>1</span><button>+</button></div>
+          <button class="add">${textTrans[lang].add}</button>
+        </div>
+      </div>`;
+    const [minus,val,plus]=card.querySelectorAll('.qty *');
+    minus.onclick=()=>{let n=+val.textContent;if(n>1)val.textContent=--n;};
+    plus.onclick=()=>{let n=+val.textContent;val.textContent=++n;};
+    card.querySelector('.add').onclick=()=>addToBasket(name,it.price,+val.textContent);
+    grid.appendChild(card);
+  });
+}
+
+function addToBasket(name,price,qty=1){
+  const f=basket.find(x=>x.name===name);
+  if(f)f.qty+=qty;else basket.push({name,price,qty});
+  renderBasket();
+}
+function removeItem(i){basket.splice(i,1);renderBasket();}
+function renderBasket(){
+  basketList.innerHTML='';
+  let total=0;
+  basket.forEach((it,i)=>{
+    total+=it.price*it.qty;
+    basketList.innerHTML+=`<div class="basket-item"><span>${it.qty}× ${it.name}</span><span>$${(it.price*it.qty).toFixed(2)} <button class='rm' onclick='removeItem(${i})'>×</button></span></div>`;
+  });
+  totalEl.textContent=total.toFixed(2);
+}
+
+/* =========================
+   اللغة والاتجاه + تثبيت السلة
+========================= */
+document.getElementById('langBtn').onclick=()=>{
+  isEN=!isEN;
+  const lang=isEN?'en':'ar';
+  document.body.dir=isEN?'ltr':'rtl';
+  document.getElementById('brand').textContent=textTrans[lang].brand;
+  document.getElementById('tagline').textContent=textTrans[lang].tagline;
+  document.getElementById('menuTitle').textContent=textTrans[lang].menu;
+  document.getElementById('catLabel').textContent=textTrans[lang].cat;
+  document.getElementById('sortLabel').textContent=textTrans[lang].sort;
+  document.getElementById('basketTitle').textContent=textTrans[lang].basket;
+  document.getElementById('totalLabel').textContent=textTrans[lang].total;
+  document.getElementById('placeBtn').textContent=textTrans[lang].place;
+  document.getElementById('langBtn').textContent=isEN?'AR':'EN';
+  // تغيير عناصر النافبار
+  document.querySelectorAll('#topNav a span:last-child').forEach(a=>{
+    a.textContent=isEN?a.dataset.en:a.dataset.ar;
+  });
+  renderMenu();
+};
+
+/* تثبيت السلة أثناء التمرير */
+const basketBox=document.querySelector('.basket');
+basketBox.style.position='sticky';
+basketBox.style.top='90px';
+
+document.getElementById('themeBtn').onclick=()=>document.body.classList.toggle('theme-blue');
+category.onchange=renderMenu;
+sort.onchange=renderMenu;
+
+
+
+
+
+
+
+
+// ==== Popup Logic ====
+const orderPopup = document.getElementById('orderPopup');
+const steps = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3')];
+const paymentMethod = document.getElementById('paymentMethod');
+const cardFields = document.getElementById('cardFields');
+
+// فتح النافذة فقط إذا كانت السلة تحتوي عناصر
+document.getElementById('placeBtn').onclick = () => {
+  if (basket.length === 0) {
+    alert(isEN ? 'Please add items to your basket first!' : 'يرجى إضافة منتجات إلى السلة أولاً!');
+    return;
+  }
+  updatePopupLanguage();
+  resetPopup();
+  orderPopup.style.display = 'flex';
+  steps.forEach((s, i) => s.style.display = i === 0 ? 'block' : 'none');
+};
+
+// إغلاق النافذة وتفريغ البيانات
+function closePopup() {
+  orderPopup.style.display = 'none';
+  document.getElementById('orderSummaryText').innerHTML = '';
+  document.getElementById('afterConfirm').style.display = 'none';
+  document.getElementById('confirmBtn').style.display = 'inline-block';
+}
+
+// تحقق من البريد
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// التنقل بين الخطوات
+function nextStep(n) {
+  if (n === 2) {
+    const name = document.getElementById('custName').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    if (!name) { alert(isEN ? 'Please enter your full name' : 'الرجاء إدخال الاسم الكامل'); return; }
+    if (!/^\d+$/.test(phone)) { alert(isEN ? 'Please enter a valid phone number' : 'الرجاء إدخال رقم جوال صحيح'); return; }
+    if (!isValidEmail(email)) { alert(isEN ? 'Please enter a valid email address' : 'الرجاء إدخال بريد إلكتروني صحيح'); return; }
+  }
+  steps.forEach((s, i) => s.style.display = (i === n - 1) ? 'block' : 'none');
+}
+
+// إظهار/إخفاء بيانات البطاقة
+paymentMethod.onchange = () => {
+  cardFields.style.display = paymentMethod.value === 'card' ? 'block' : 'none';
+};
+
+// إعادة تعيين النوافذ
+function resetPopup() {
+  steps.forEach(s => s.style.display = 'none');
+  steps[0].style.display = 'block';
+  document.getElementById('afterConfirm').style.display = 'none';
+  document.getElementById('confirmBtn').style.display = 'inline-block';
+}
+
+// تأكيد الطلب مع تفاصيل السلة
+function finishOrder() {
+  const name = document.getElementById('custName').value;
+  const phone = document.getElementById('phone').value;
+  const email = document.getElementById('email').value;
+  const address = document.getElementById('address').value || (isEN ? '—' : '—');
+  const pay = paymentMethod.value === 'card' ? (isEN ? 'Credit Card' : 'بطاقة') : (isEN ? 'Cash' : 'نقداً');
+
+  let itemsHTML = '';
+  let total = 0;
+  basket.forEach(item => {
+    const itemTotal = item.price * item.qty;
+    total += itemTotal;
+    itemsHTML += `${item.name} × ${item.qty} — $${itemTotal.toFixed(2)}<br>`;
+  });
+
+  const totalText = `<b>${isEN ? 'Total:' : 'الإجمالي:'}</b> $${total.toFixed(2)}`;
+  const summary = isEN
+    ? `<b>Name:</b> ${name}<br><b>Phone:</b> ${phone}<br><b>Email:</b> ${email}<br><b>Address:</b> ${address}<br><b>Payment:</b> ${pay}<br><hr><b>Order Details:</b><br>${itemsHTML}${totalText}<br><br>✅ Your order is confirmed!`
+    : `<b>الاسم:</b> ${name}<br><b>الجوال:</b> ${phone}<br><b>البريد:</b> ${email}<br><b>العنوان:</b> ${address}<br><b>طريقة الدفع:</b> ${pay}<br><hr><b>تفاصيل الطلب:</b><br>${itemsHTML}${totalText}<br><br>✅ تم تأكيد طلبك بنجاح!`;
+
+  document.getElementById('orderSummaryText').innerHTML = summary;
+  document.getElementById('confirmBtn').style.display = 'none';
+  document.getElementById('afterConfirm').style.display = 'block';
+}
+
+// تحميل الفاتورة HTML بدل PDF (بدون مكتبات)
+function downloadPDF() {
+  const summary = document.getElementById('orderSummaryText').innerHTML;
+  const name = document.getElementById('custName').value || (isEN ? 'Customer' : 'عميل');
+  const langDir = isEN ? 'ltr' : 'rtl';
+  const title = isEN ? 'Super Slice - Invoice' : 'سوبر سلايس - الفاتورة';
+  const logoText = isEN ? '🍕 Super Slice' : '🍕 سوبر سلايس';
+
+  // تصميم الفاتورة
+  const html = `
+  <html dir="${langDir}">
+  <head><meta charset="UTF-8">
+  <title>${title}</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; color: #000; padding: 40px; }
+    .invoice { background: #fff; padding: 25px; border-radius: 10px; max-width: 550px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .logo { text-align:center; font-size:22px; color:#333; margin-bottom:8px; font-weight:bold; }
+    h2 { text-align:center; color:#444; margin-bottom:15px; }
+    hr { border:0; border-top:1px solid #ccc; margin:15px 0; }
+    .footer { text-align:center; margin-top:20px; color:#777; font-size:13px; }
+  </style>
+  </head>
+  <body>
+    <div class="invoice">
+      <div class="logo">${logoText}</div>
+      <h2>${title}</h2>
+      <hr>
+      ${summary}
+      <div class="footer">${isEN ? "Thank you for your order!" : "شكرًا لتسوقك معنا!"}</div>
+    </div>
+  </body>
+  </html>
+  `;
+
+  const blob = new Blob([html], { type: 'text/html' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = isEN
+    ? `${name} - SuperSlice Invoice.html`
+    : `${name} - فاتورة بيتزا سوبر سلايس.html`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+
+// تحديث اللغة للنوافذ المنبثقة
+function updatePopupLanguage() {
+  const t = isEN
+    ? { enter:'Enter Your Details', cancel:'Cancel', cont:'Continue', pay:'Payment Method', back:'Back', next:'Next', confirm:'Confirm Your Order', download:'📄 Download Invoice' }
+    : { enter:'أدخل بياناتك', cancel:'إلغاء', cont:'متابعة', pay:'طريقة الدفع', back:'رجوع', next:'التالي', confirm:'تأكيد الطلب', download:'📄 تحميل الفاتورة ' };
+  
+  document.getElementById('enterDetails').innerText = t.enter;
+  document.getElementById('cancelBtn').innerText = t.cancel;
+  document.getElementById('continueBtn').innerText = t.cont;
+  document.getElementById('paymentTitle').innerText = t.pay;
+  document.getElementById('backBtn').innerText = t.back;
+  document.getElementById('nextBtn').innerText = t.next;
+  document.getElementById('confirmTitle').innerText = t.confirm;
+  document.getElementById('backConfirmBtn').innerText = t.back;
+  document.querySelector('#afterConfirm .next').innerText = t.download;
+  document.getElementById('confirmBtn').innerText = isEN ? 'Confirm' : 'تأكيد';
+
+}
+
+
+renderMenu();
+</script>
+
+</body>
+</html>

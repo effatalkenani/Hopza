@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Super Slice</title>
+  <style>
+    :root{ --main-color:#219ebc; --accent-color:#ffb703; }
+    .red-theme{ --main-color:#e63946; --accent-color:#ffb703; }
+
+    html,body{height:100%;margin:0}
+    body{
+      display:flex;flex-direction:column;
+      font-family:Arial, sans-serif;
+      background:var(--main-color);
+      transition:background .5s;
+    }
+
+    /* HEADER */
+    header{
+      position:absolute; top:0; left:0; right:0;
+      background:var(--main-color); color:#fff;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 20px; z-index:10;
+    }
+
+    .logo{display:flex; align-items:center; gap:10px;}
+    .logo-img{height:60px}
+    .logo-text h1{
+      margin:0; font-size:1.8rem; line-height:1.1;
+      color:var(--accent-color); text-shadow:2px 2px #333;
+    }
+    .logo-text p{ margin:0; font-size:.95rem; font-style:italic; color:#fff; }
+
+    nav{
+      display:flex; gap:25px; align-items:center;
+      position:absolute; left:50%; transform:translateX(-50%);
+    }
+    nav a{
+      text-decoration:none; color:#fff; font-weight:bold;
+      padding:8px 14px; display:flex; align-items:center; gap:6px;
+      font-size:1rem; transition:.3s;
+    }
+    nav a:hover{ background:var(--accent-color); color:#000; border-radius:8px; }
+
+    .controls{display:flex; align-items:center; gap:10px;}
+    .lang-toggle{
+      border:none; background:var(--accent-color); color:#000;
+      font-weight:bold; padding:6px 12px; border-radius:20px; cursor:pointer; transition:.3s;
+    }
+    .lang-toggle:hover{ background:#fff; color:var(--main-color); }
+    .theme-toggle{
+      width:40px; height:40px; border-radius:50%;
+      background:#e63946; border:2px solid #fff; cursor:pointer; transition:.5s;
+    }
+
+    /* SLIDER */
+    .slider{ position:relative; width:100%; height:100vh; overflow:hidden; flex:1; }
+    .slides{ display:flex; width:300%; height:100%; transition:margin-left .5s ease; }
+    .slides img{ width:100%; height:100%; object-fit:cover; }
+
+    .dots{ position:absolute; bottom:22px; left:50%; transform:translateX(-50%); }
+    .dots button{
+      width:15px; height:15px; margin:0 5px; border-radius:50%;
+      border:none; background:#fff; opacity:.55; cursor:pointer; transition:opacity .3s;
+    }
+    .dots button.active{ opacity:1; background:var(--accent-color); }
+
+    /* Welcome message */
+    .welcome{
+      position:absolute; top:25%; left:50%; transform:translateX(-50%);
+      background:rgba(0,0,0,.75); color:#fff; padding:20px 40px; border-radius:12px;
+      font-size:1.35rem; font-weight:bold; text-align:center; line-height:1.6;
+      animation:stayThenSlideLeft 5s ease forwards; z-index:3;
+    }
+    @keyframes stayThenSlideLeft{
+      0%{opacity:0; transform:translate(-50%,0)}
+      10%{opacity:1; transform:translate(-50%,0)}
+      80%{opacity:1; transform:translate(-50%,0)}
+      100%{opacity:0; transform:translate(-150%,0)}
+    }
+
+    .btn{
+      position:absolute; bottom:86px; left:50%; transform:translateX(-50%);
+      background:var(--accent-color); color:#000; font-size:22px; font-weight:bold;
+      padding:12px 24px; border-radius:8px; cursor:pointer; border:none; transition:.3s; z-index:2;
+    }
+    .btn:hover{ background:var(--main-color); color:#fff; }
+
+    footer{ background:#111; color:#fff; text-align:center; padding:16px; flex-shrink:0; }
+
+    /* Arabic adjustments */
+    body[dir="rtl"] .logo{margin-right:0;}
+    body[dir="ltr"] .logo{margin-left:0;}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="super slice logo.png" alt="Super Slice Logo" class="logo-img"/>
+      <div class="logo-text">
+        <h1 id="logoTitle">SUPER SLICE</h1>
+        <p id="logoTagline">One Slice, Endless Flavor</p>
+      </div>
+    </div>
+
+    <nav id="navMenu">
+      <a href="#" data-en="🏠 Home" data-ar="🏠 الرئيسية">🏠 Home</a>
+      <a href="#" data-en="🍕 Order" data-ar="🍕 اطلب الآن">🍕 Order</a>
+      <a href="#" data-en="📞 Contact" data-ar="📞 تواصل">📞 Contact</a>
+      <a href="#" data-en="🔑 Login" data-ar="🔑 تسجيل الدخول">🔑 Login</a>
+      <a href="#" data-en="📝 Register" data-ar="📝 تسجيل">📝 Register</a>
+    </nav>
+
+    <div class="controls">
+      <button class="lang-toggle" id="langBtn">AR</button>
+      <button class="theme-toggle"></button>
+    </div>
+  </header>
+
+  <section class="slider">
+    <div class="slides" id="slides">
+      <img src="https://images.pexels.com/photos/1435907/pexels-photo-1435907.jpeg"/>
+      <img src="https://images.pexels.com/photos/825661/pexels-photo-825661.jpeg"/>
+      <img src="https://images.pexels.com/photos/4109084/pexels-photo-4109084.jpeg"/>
+    </div>
+
+    <div class="welcome" id="welcomeMsg">
+      👋 Welcome to Super Slice!<br/>One Slice, Endless Flavor 🍕<br/>مرحباً بكم في سوبر سلايس 🎉
+    </div>
+
+    <button class="btn" id="orderBtn" data-en="Order Now" data-ar="اطلب الآن"><strong>Order Now</strong></button>
+
+    <div class="dots">
+      <button class="active" data-index="0"></button>
+      <button data-index="1"></button>
+      <button data-index="2"></button>
+    </div>
+  </section>
+
+  <footer id="footerText">© 2025 Super Slice. All rights reserved.</footer>
+
+  <script>
+    const langBtn=document.getElementById('langBtn'),
+          navMenu=document.getElementById('navMenu'),
+          orderBtn=document.getElementById('orderBtn'),
+          footerText=document.getElementById('footerText'),
+          logoTitle=document.getElementById('logoTitle'),
+          logoTagline=document.getElementById('logoTagline'),
+          welcomeMsg=document.getElementById('welcomeMsg');
+    let isEnglish=true;
+
+    langBtn.addEventListener('click',()=>{
+      if(isEnglish){
+        document.documentElement.lang='ar'; document.body.dir='rtl'; langBtn.textContent='EN';
+        logoTitle.textContent='سوبر سلايس'; logoTagline.textContent='شريحة واحدة، نكهة لا تنتهي';
+        footerText.textContent='© ٢٠٢٥ سوبر سلايس. جميع الحقوق محفوظة.';
+        welcomeMsg.innerHTML='👋 أهلاً وسهلاً بكم في سوبر سلايس!<br>شريحة واحدة، نكهة لا تنتهي 🍕';
+        [...navMenu.querySelectorAll('a')].forEach(a=>a.textContent=a.dataset.ar);
+        orderBtn.textContent=orderBtn.dataset.ar;
+      }else{
+        document.documentElement.lang='en'; document.body.dir='ltr'; langBtn.textContent='AR';
+        logoTitle.textContent='SUPER SLICE'; logoTagline.textContent='One Slice, Endless Flavor';
+        footerText.textContent='© 2025 Super Slice. All rights reserved.';
+        welcomeMsg.innerHTML='👋 Welcome to Super Slice!<br>One Slice, Endless Flavor 🍕';
+        [...navMenu.querySelectorAll('a')].forEach(a=>a.textContent=a.dataset.en);
+        orderBtn.textContent=orderBtn.dataset.en;
+      }
+      isEnglish=!isEnglish;
+    });
+
+    const toggleBtn=document.querySelector('.theme-toggle');
+    toggleBtn.addEventListener('click',()=>{
+      document.body.classList.toggle('red-theme');
+      toggleBtn.style.background=document.body.classList.contains('red-theme')?'#219ebc':'#e63946';
+    });
+
+    const slides=document.getElementById('slides'),dots=document.querySelectorAll('.dots button');
+    let index=0,total=dots.length;
+    function updateSlider(){slides.style.marginLeft=`-${index*100}%`;dots.forEach(d=>d.classList.remove('active'));dots[index].classList.add('active');}
+    function autoSlide(){index=(index+1)%total;updateSlider();}
+    let slideInterval=setInterval(autoSlide,3000);
+    dots.forEach(dot=>{dot.addEventListener('click',()=>{index=+dot.dataset.index;updateSlider();clearInterval(slideInterval);slideInterval=setInterval(autoSlide,4000);});});
+  </script>
+</body>
+</html>
