@@ -1,4 +1,3 @@
-// ====== ترجمة نصوص الواجهة (Labels) ======
 // ====== UI Translations ======
 const textTrans = {
   en: {
@@ -21,7 +20,6 @@ const textTrans = {
   }
 };
 
-// أسماء المنتجات بالعربية
 // Arabic product names
 const namesAR = {
   pizza: {"Margherita":"مارغريتا","Pepperoni":"ببروني","Hawaiian":"هاواي","Cheese Lovers Pizza":"بيتزا عشاق الجبن","BBQ Chicken":"دجاج باربكيو","Veggie":"خضار","Sweet Corn Pizza":"بيتزا الذرة الحلوة","Mushroom Delight":"بيتزا الفطر","Mexican":"مكسيكية","Cheddar Melt Pizza":"بيتزا شيدر"},
@@ -29,11 +27,9 @@ const namesAR = {
   drinks: {"Water":"ماء","Apple Juice":"عصير تفاح","Cola":"كولا","Cold chocolate":"شوكولاتة باردة","Strawberry Juice":"عصير فراولة","Mixed Fruit Juice":"عصير مشكل","Pepsi Juice":"بيبسي","Cappuccino":"كابتشينو","Mango Juice":"عصير مانجو","Orange Juice":"عصير برتقال"}
 };
 
-// تحويل أرقام عربية للعرض
 // Arabic numerals for display
 function toArabic(n){ return n.toString().replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]); }
 
-// بيانات القائمة (روابط صور)
 // Menu data (images via links)
 const menuData = {
   pizza: [
@@ -74,7 +70,6 @@ const menuData = {
   ]
 };
 
-// حالة السلة
 // Basket state
 let basket = [];
 
@@ -86,7 +81,6 @@ const totalEl     = document.getElementById('total');
 const categoryEl  = document.getElementById('category');
 const sortEl      = document.getElementById('sort');
 
-// ريندر القائمة
 // Render menu grid
 function renderMenu(){
   const cat  = categoryEl.value;
@@ -128,7 +122,6 @@ function renderMenu(){
   });
 }
 
-// سلة
 function addToBasket(name, price, qty=1){
   const f = basket.find(x=>x.name===name);
   if (f) f.qty += qty;
@@ -158,17 +151,14 @@ function renderBasket(){
   totalEl.textContent = total.toFixed(2);
 }
 
-// ربط الفلاتر
 categoryEl.addEventListener('change', renderMenu);
 sortEl.addEventListener('change', renderMenu);
 
-// ===== نافذة الطلب =====
 const orderPopup   = document.getElementById('orderPopup');
 const steps        = [document.getElementById('step1'), document.getElementById('step2'), document.getElementById('step3')];
 const paymentMethod= document.getElementById('paymentMethod');
 const cardFields   = document.getElementById('cardFields');
 
-// فتح النافذة فقط إذا كانت السلة تحتوي عناصر
 document.getElementById('placeBtn').onclick = () => {
   if (basket.length === 0) {
     alert(isEN ? 'Please add items to your basket first!' : 'يرجى إضافة منتجات إلى السلة أولاً!');
@@ -180,7 +170,6 @@ document.getElementById('placeBtn').onclick = () => {
   steps.forEach((s, i) => s.style.display = i === 0 ? 'block' : 'none');
 };
 
-// إغلاق النافذة وتفريغ ملخص التأكيد
 function closePopup() {
   orderPopup.style.display = 'none';
   document.getElementById('orderSummaryText').innerHTML = '';
@@ -188,12 +177,10 @@ function closePopup() {
   document.getElementById('confirmBtn').style.display = 'inline-block';
 }
 
-// تحقق من البريد
 function isValidEmail(email){
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// التنقل بين الخطوات + تحقق
 function nextStep(n){
   if (n === 2) {
     const name  = document.getElementById('custName').value.trim();
@@ -206,12 +193,10 @@ function nextStep(n){
   steps.forEach((s, i) => s.style.display = (i === n-1) ? 'block' : 'none');
 }
 
-// إظهار/إخفاء حقول البطاقة
 paymentMethod.onchange = () => {
   cardFields.style.display = paymentMethod.value === 'card' ? 'block' : 'none';
 };
 
-// إعادة تعيين النوافذ
 function resetPopup() {
   steps.forEach(s => s.style.display = 'none');
   steps[0].style.display = 'block';
@@ -219,7 +204,6 @@ function resetPopup() {
   document.getElementById('confirmBtn').style.display = 'inline-block';
 }
 
-// تأكيد الطلب + تفاصيل السلة
 function finishOrder(){
   const name    = document.getElementById('custName').value;
   const phone   = document.getElementById('phone').value;
@@ -227,7 +211,6 @@ function finishOrder(){
   const address = document.getElementById('address').value || (isEN?'—':'—');
   const pay     = paymentMethod.value === 'card' ? (isEN?'Credit Card':'بطاقة') : (isEN?'Cash':'نقداً');
 
-  // بناء تفاصيل السلة
   let itemsHTML = '';
   let total = 0;
   basket.forEach(item=>{
@@ -246,7 +229,6 @@ function finishOrder(){
   document.getElementById('afterConfirm').style.display = 'block';
 }
 
-// تحميل الفاتورة كـ HTML (بدون مكتبات خارجية)
 function downloadInvoiceHTML(){
   const summary = document.getElementById('orderSummaryText').innerHTML;
   const name    = document.getElementById('custName').value || (isEN ? 'Customer' : 'عميل');
@@ -288,7 +270,6 @@ function downloadInvoiceHTML(){
   URL.revokeObjectURL(link.href);
 }
 
-// ترجمة نصوص النوافذ المنبثقة حسب اللغة
 function updatePopupLanguage(){
   const t = isEN ? textTrans.en.popup : textTrans.ar.popup;
   document.getElementById('enterDetails').innerText = t.enter;
@@ -301,7 +282,6 @@ function updatePopupLanguage(){
   document.getElementById('backConfirmBtn').innerText = t.back;
   document.querySelector('#afterConfirm .next span').innerText = isEN ? 'Download Invoice' : 'تحميل الفاتورة';
 
-  // تحديث عناصر الصفحة الرئيسية للطلب
   document.getElementById('menuTitle').innerText  = isEN ? textTrans.en.menu  : textTrans.ar.menu;
   document.getElementById('catLabel').innerText   = isEN ? textTrans.en.cat   : textTrans.ar.cat;
   document.getElementById('sortLabel').innerText  = isEN ? textTrans.en.sort  : textTrans.ar.sort;
@@ -309,7 +289,6 @@ function updatePopupLanguage(){
   document.getElementById('totalLabel').innerText = isEN ? textTrans.en.total : textTrans.ar.total;
   document.getElementById('placeBtn').innerText   = isEN ? textTrans.en.place : textTrans.ar.place;
 
-  // تحديث place/order بطاقات الأزرار والبطاقات
   renderMenu();
 }
 
