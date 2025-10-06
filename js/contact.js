@@ -39,7 +39,6 @@
     const replyHint = document.getElementById('replyHint');
     if(replyHint) replyHint.textContent = isEN ? 'We reply within 1-2 business days.' : 'نرد عادة خلال ١-٢ يوم عمل.';
 
-    // اتجاه الصفحة
     document.body.dir = isEN ? 'ltr' : 'rtl';
 
     const container = document.querySelector('.contact-container');
