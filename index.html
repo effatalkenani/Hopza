@@ -2,27 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- تفعيل عرض متجاوب على الجوال -->
   <!-- Enable responsive viewport on mobile -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Super Slice</title>
 
-  <!-- أيقونات ماتيريال (مسموح كـ Web Font؛ ليست مكتبة JS) -->
   <!-- Google Material Icons (web font, not a JS library) -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <!-- الأنماط العامة + الصفحة الرئيسية -->
   <!-- Global styles + home page styles -->
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/home.css">
 </head>
 <body class="theme-orange">
-  <!-- رابط تخطي للمحتوى لتحسين الوصول -->
   <!-- Skip link for accessibility -->
   <a href="#main" class="skip-link" aria-label="Skip to content">Skip to content</a>
 
-  <!-- ===== Header (مُوحَّد) / Unified Header ===== -->
   <header class="site-header" role="banner" aria-label="Site header">
     <div class="logo" tabindex="0">
       <img src="images/super-slice-logo.png" alt="Super Slice Logo" />
@@ -56,13 +51,10 @@
     </nav>
 
     <div class="controls">
-      <!-- زر نمط الوصول (تكبير النص/تباين) -->
       <!-- Accessibility quick toggle -->
       
-      <!-- زر تغيير الثيم -->
       <!-- Theme toggle -->
       <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme"></button>
-      <!-- زر تغيير اللغة -->
       <!-- Language toggle -->
       <button class="lang-toggle" id="langBtn" aria-label="Toggle Language">AR</button>
     </div>
@@ -92,7 +84,6 @@
     </footer>
   </main>
 
-  <!-- سكربت مشترك (الثيم/اللغة/الهيدر) -->
   <!-- Common JS (theme/lang/header) -->
   <script src="js/common.js"></script>
 </body>
