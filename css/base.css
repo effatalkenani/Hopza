@@ -1,63 +1,210 @@
-/* ========= Base Theme Vars ========= */
-/* EN: Main color variables (theme can swap values). */
-/* AR: متغيرات الألوان الأساسية (الثيم يبدّل القيم). */
-:root{
-  --accent-color:#ffb703; /* orange */
-  --hover-color:#219ebc;  /* blue  */
-  --bg:#000; --text:#fff;
-  --panel:#111; --line:#2b2b2b;
-}
-body.theme-blue{
-  --accent-color:#219ebc;
-  --hover-color:#ffb703;
+/* Root variables */
+:root {
+  --accent-color: #ffb703;
+  --hover-color: #219ebc;
+  --bg: #000;
+  --text: #fff;
+  --panel: #111;
+  --line: #2b2b2b;
 }
 
-/* ========= Global Reset ========= */
-/* EN: Basic reset and typography. */
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
-
-/* ========= Accessibility Helpers ========= */
-/* EN: Helpers for screen-readers and focus visibility. */
-.visually-hidden{position:absolute;left:-9999px}
-:focus-visible{outline:2px dashed var(--accent-color);outline-offset:3px}
-
-/* ========= Header (Unified) ========= */
-/* EN: Same header across pages, sticky, glass effect. */
-header{
-	
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 40px;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);
-  border-bottom:1px solid rgba(255,255,255,.08);
+body.theme-blue {
+  --accent-color: #219ebc;
+  --hover-color: #ffb703;
 }
-.logo{display:flex;align-items:center;gap:12px}
-.logo img{height:48px;object-fit:contain}
-.logo-text{display:flex;flex-direction:column;line-height:1.25}
-.logo-text h1{margin:0;font-size:1.25rem;font-weight:700}
-.logo-text p{margin:0;font-size:.9rem;opacity:.85;font-style:italic}
 
-nav{display:flex;align-items:center;gap:22px}
-nav a{
-  text-decoration:none;color:#fff;font-weight:bold;display:flex;align-items:center;gap:6px;transition:.25s;
+* {
+  box-sizing: border-box;
 }
-nav a:hover,nav a.active{color:var(--accent-color)}
-nav .material-icons{font-size:20px}
 
-.controls{display:flex;align-items:center;gap:10px;margin-left:20px}
-#langBtn{
-  padding:6px 14px;border-radius:20px;border:none;cursor:pointer;font-weight:700;
-  background:var(--accent-color);color:#000;transition:.25s;
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
 }
-#langBtn:hover{background:var(--hover-color);color:#fff}
-#themeBtn{
-  width:38px;height:38px;border-radius:50%;border:2px solid #fff;cursor:pointer;
-  background:var(--hover-color);
-}
-body.theme-blue #themeBtn{background:var(--accent-color)}
 
-/* ========= Footer (Unified) ========= */
-/* EN: Unified footer with accessibility line. */
+.visually-hidden {
+  position: absolute;
+  left: -9999px;
+}
+
+:focus-visible {
+  outline: 2px dashed var(--accent-color);
+  outline-offset: 3px;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 12px 40px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ------- English (LTR) ------- */
+body[dir="ltr"] header {
+  flex-direction: row;
+}
+
+body[dir="ltr"] .logo { order: 1; }
+body[dir="ltr"] .search-container {
+  order: 2;
+  margin-inline: 40px auto;
+}
+body[dir="ltr"] nav {
+  order: 3;
+  display: flex;
+  justify-content: flex-start;
+  gap: 22px;
+}
+body[dir="ltr"] .controls {
+  order: 4;
+  margin-left: 20px;
+}
+
+
+/* ------- Arabic (RTL) ------- */
+body[dir="rtl"] header {
+  flex-direction: row;
+}
+
+body[dir="rtl"] .logo {
+  order: 1;
+  margin-right: auto;
+}
+
+body[dir="rtl"] .search-container {
+  order: 2;
+  margin-inline: 40px auto;
+}
+
+body[dir="rtl"] nav {
+  order: 3;
+  display: flex;
+  justify-content: flex-end;
+  gap: 22px;
+  margin-right: 20px;
+}
+
+body[dir="rtl"] .controls {
+  order: 4;
+  margin-right: 20px;
+}
+
+
+/* ------- Logo ------- */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo img {
+  height: 48px;
+  object-fit: contain;
+}
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.logo-text h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.logo-text p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  font-style: italic;
+}
+
+/* ------- Search ------- */
+.search-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+#searchBox {
+  background: #111;
+  color: #fff;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: 2px dashed transparent;
+  border-radius: 10px;
+  transition: border-color 0.3s;
+  width: 260px;
+  max-width: 100%;
+}
+
+#searchBox::placeholder {
+  color: #ccc;
+}
+#searchBox:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+/* ------- Navigation ------- */
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.25s;
+}
+nav a:hover,
+nav a.active {
+  color: var(--accent-color);
+}
+nav .material-icons {
+  font-size: 20px;
+}
+
+/* ------- Controls (language + theme) ------- */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#langBtn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  background: var(--accent-color);
+  color: #000;
+  transition: 0.25s;
+}
+#langBtn:hover {
+  background: var(--hover-color);
+  color: #fff;
+}
+#themeBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  cursor: pointer;
+  background: var(--hover-color);
+}
+body.theme-blue #themeBtn {
+  background: var(--accent-color);
+}
+
+/* ------- Footer ------- */
 footer {
   text-align: center;
   padding: 18px 12px;
@@ -65,26 +212,55 @@ footer {
   background: transparent !important;
   border: none !important;
   backdrop-filter: none !important;
-  margin-top: 40px; 
+  margin-top: 40px;
+}
+.footer-a11y {
+  display: block;
+  margin-top: 6px;
+  color: #bbb;
+  font-size: 0.9rem;
 }
 
+/* ------- Page padding ------- */
+.page-wrap {
+  padding-top: 88px;
+}
 
+/* ------- Responsive ------- */
+@media (max-width: 900px) {
+  header {
+    padding: 10px 16px;
+    flex-wrap: wrap;
+  }
 
-.footer-a11y{display:block;margin-top:6px;color:#bbb;font-size:.9rem}
+  .logo-text h1 {
+    font-size: 1.05rem;
+  }
 
-/* ========= Sections Spacing ========= */
-/* EN: Push content below fixed header. */
-.page-wrap{padding-top:88px}
+  nav {
+    gap: 14px;
+    width: 100%;
+    justify-content: center;
+    order: 4;
+  }
 
-/* ========= Responsive ========= */
-/* EN: Simple responsive tune-ups. */
-@media (max-width:900px){
-  header{padding:10px 16px}
-  .logo-text h1{font-size:1.05rem}
-  nav{gap:14px}
+  .search-container {
+    width: 100%;
+    order: 3;
+    margin: 12px 0;
+  }
+
+  #searchBox {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .controls {
+    order: 2;
+    margin: 10px auto;
+  }
 }
 
 #dots {
   margin-bottom: 40px;
 }
-

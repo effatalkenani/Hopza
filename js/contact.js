@@ -37,8 +37,18 @@
     const msg = document.getElementById('message'); if(msg) msg.placeholder = T.msg;
 
     const replyHint = document.getElementById('replyHint');
+	// تحديث العناصر التي تحمل class="label"
+document.querySelectorAll('.label').forEach(el => {
+  const en = el.dataset.en;
+  const ar = el.dataset.ar;
+  if (en && ar) {
+    el.textContent = isEN ? en : ar;
+  }
+});
+
     if(replyHint) replyHint.textContent = isEN ? 'We reply within 1-2 business days.' : 'نرد عادة خلال ١-٢ يوم عمل.';
 
+    // اتجاه الصفحة
     document.body.dir = isEN ? 'ltr' : 'rtl';
 
     const container = document.querySelector('.contact-container');

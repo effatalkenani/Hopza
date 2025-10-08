@@ -1,21 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <!-- Enable responsive viewport on mobile -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Super Slice</title>
-
-  <!-- Google Material Icons (web font, not a JS library) -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  <!-- Global styles + home page styles -->
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/home.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/home.css" />
 </head>
 <body class="theme-orange">
-  <!-- Skip link for accessibility -->
   <a href="#main" class="skip-link" aria-label="Skip to content">Skip to content</a>
 
   <header class="site-header" role="banner" aria-label="Site header">
@@ -25,6 +18,10 @@
         <h1 id="logoTitle">SUPER SLICE</h1>
         <p id="logoTagline">One Slice, Endless Flavor</p>
       </div>
+    </div>
+
+    <div class="search-container">
+      <input type="search" id="searchBox" placeholder="Search..." aria-label="Search" />
     </div>
 
     <nav id="topNav" class="main-nav" role="navigation" aria-label="Main navigation">
@@ -40,42 +37,31 @@
         <span class="material-icons" aria-hidden="true">call</span>
         <span class="nav-text" data-en="Contact" data-ar="تواصل">Contact</span>
       </a>
-      <a href="#">
-        <span class="material-icons" aria-hidden="true">login</span>
-        <span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span>
-      </a>
-      <a href="#">
-        <span class="material-icons" aria-hidden="true">person_add</span>
-        <span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span>
-      </a>
+      <a href="#"><span class="material-icons" aria-hidden="true">login</span><span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span></a>
+      <a href="#"><span class="material-icons" aria-hidden="true">person_add</span><span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span></a>
     </nav>
 
     <div class="controls">
-      <!-- Accessibility quick toggle -->
-      
-      <!-- Theme toggle -->
       <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme"></button>
-      <!-- Language toggle -->
       <button class="lang-toggle" id="langBtn" aria-label="Toggle Language">AR</button>
     </div>
   </header>
 
-  <!-- ===== Slider Section ===== -->
   <main id="main" class="slider" role="main">
     <div class="slides" id="slides" aria-live="polite">
       <img src="images/sliderImage1.jpeg" alt="Fresh veggie pizza" />
       <img src="images/sliderImage2.jpeg" alt="Classic margherita pizza" />
       <img src="images/sliderImage3.jpeg" alt="Hot pepperoni pizza" />
     </div>
+
     <div class="overlay" aria-hidden="true"></div>
 
-    <div class="welcome" id="welcomeMsg" tabindex="0">
-      Welcome <br> One Slice, Endless Flavor
+    <!-- ✅ الرسالة الترحيبية وزر الطلب -->
+    <div class="centered-content">
+      <div id="welcomeMsg" class="welcome" data-en="Welcome<br>One Slice, Endless Flavor" data-ar="مرحباً بك<br>سوبر سلايس<br>شريحة واحدة، نكهة لا تنتهي">
+      </div>
+      <a href="order.html" class="btn" id="orderNowBtn" data-en="Order Now" data-ar="اطلب الآن" aria-label="Order Now">Order Now</a>
     </div>
-
-    <a href="order.html" class="btn" data-en="Order Now" data-ar="اطلب الآن" aria-label="Order Now">
-      Order Now
-    </a>
 
     <div class="dots" id="dots" role="tablist" aria-label="Slider dots"></div>
 
@@ -84,7 +70,6 @@
     </footer>
   </main>
 
-  <!-- Common JS (theme/lang/header) -->
   <script src="js/common.js"></script>
 </body>
 </html>

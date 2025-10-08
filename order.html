@@ -2,14 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Responsive viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Super Slice – Order</title>
-
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  <!-- Shared + Order page styles -->
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/order.css">
 </head>
@@ -18,15 +13,20 @@
 
   <header class="site-header" role="banner" aria-label="Site header">
     <div class="logo" tabindex="0">
-      <img src="images/super-slice-logo.png" alt="Super Slice Logo">
+      <img src="images/super-slice-logo.png" alt="Super Slice Logo" />
       <div class="logo-text">
-        <h1 id="brand" data-en="SUPER SLICE" data-ar="سوبر سلايس">SUPER SLICE</h1>
-        <p id="tagline" data-en="One Slice, Endless Flavor" data-ar="شريحة واحدة، نكهة لا تنتهي">One Slice, Endless Flavor</p>
+        <h1 id="logoTitle">SUPER SLICE</h1>
+        <p id="logoTagline">One Slice, Endless Flavor</p>
       </div>
     </div>
 
+    <!-- زر البحث -->
+    <div class="search-container">
+      <input type="search" id="searchBox" placeholder="Search..." aria-label="Search" />
+    </div>
+
     <nav id="topNav" class="main-nav" role="navigation" aria-label="Main navigation">
-      <a href="index.html">
+      <a href="index.html" >
         <span class="material-icons" aria-hidden="true">home</span>
         <span class="nav-text" data-en="Home" data-ar="الرئيسية">Home</span>
       </a>
@@ -38,21 +38,16 @@
         <span class="material-icons" aria-hidden="true">call</span>
         <span class="nav-text" data-en="Contact" data-ar="تواصل">Contact</span>
       </a>
-      <a href="#">
-        <span class="material-icons" aria-hidden="true">login</span>
-        <span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span>
-      </a>
-      <a href="#">
-        <span class="material-icons" aria-hidden="true">person_add</span>
-        <span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span>
-      </a>
+      <a href="#"><span class="material-icons" aria-hidden="true">login</span><span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span></a>
+      <a href="#"><span class="material-icons" aria-hidden="true">person_add</span><span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span></a>
     </nav>
 
     <div class="controls">
-      <button id="themeBtn" class="theme-toggle" aria-label="Toggle Theme"></button>
-      <button id="langBtn" class="lang-toggle" aria-label="Toggle Language">AR</button>
+      <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme"></button>
+      <button class="lang-toggle" id="langBtn" aria-label="Toggle Language">AR</button>
     </div>
   </header>
+  
 
   <main id="main" class="order-main" role="main">
     <section class="menu" aria-labelledby="menuTitle">
@@ -67,7 +62,6 @@
               <option value="drinks" data-en="Drinks" data-ar="مشروبات">Drinks</option>
             </select>
           </div>
-
           <div class="select-wrap">
             <label id="sortLabel" for="sort" data-en="Sort by:" data-ar="الفرز حسب:">Sort by:</label>
             <select id="sort" aria-label="Sort by">
@@ -78,7 +72,6 @@
           </div>
         </div>
       </div>
-
       <div class="filters-divider" aria-hidden="true"></div>
       <div id="grid" class="menu-items" role="list"></div>
     </section>
@@ -90,32 +83,28 @@
         <span id="totalLabel" data-en="Total:" data-ar="الإجمالي:">Total:</span>
         $<span id="total">0.00</span>
       </div>
-      <button class="place" id="placeBtn" data-en="Place Order" data-ar="إتمام الطلب" aria-label="Place Order">Place Order</button>
+      <button class="place" id="placeBtn" data-en="Place Order" data-ar="إتمام الطلب" aria-label="Place Order">
+        Place Order
+      </button>
     </aside>
   </main>
 
-  <footer id="foot" class="site-footer" role="contentinfo">
-    © 2025 Super Slice. All rights reserved. · <span aria-label="Accessibility Statement">♿ This website is accessibility-friendly</span>
-  </footer>
-
-  <!-- === Order Popup (3 steps) === -->
+  <!-- Popup الطلب -->
   <div id="orderPopup" role="dialog" aria-modal="true" aria-labelledby="enterDetails">
-    <!-- Step 1 -->
+    <!-- Step 1: بياناتك -->
     <div class="popup-box" id="step1">
       <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
       <h3 id="enterDetails">Enter Your Details</h3>
 
-      <input id="custName" placeholder="Full Name" type="text" required aria-label="Full Name">
+      <input id="custName" placeholder="Full Name" type="text" aria-label="Full Name" />
       <div class="inline-group">
-        <label class="sr" for="countryCode">Country Code</label>
         <select id="countryCode" style="flex:1" aria-label="Country Code">
           <option value="+966">🇸🇦 +966</option>
           <option value="+44">🇬🇧 +44</option>
         </select>
-        <input id="phone" placeholder="Phone Number" style="flex:2" type="text" aria-label="Phone Number">
+        <input id="phone" placeholder="Phone Number" style="flex:2" type="text" aria-label="Phone Number" />
       </div>
-
-      <input id="email" placeholder="Email" type="email" aria-label="Email">
+      <input id="email" placeholder="Email" type="email" aria-label="Email" />
       <textarea id="address" placeholder="Address (Optional)" aria-label="Address (Optional)"></textarea>
 
       <div class="buttons">
@@ -124,47 +113,42 @@
       </div>
     </div>
 
-    <!-- Step 2 -->
+    <!-- Step 2: طريقة الدفع -->
     <div class="popup-box" id="step2" style="display:none;">
       <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
       <h3 id="paymentTitle">Payment Method</h3>
-
       <select id="paymentMethod" aria-label="Payment Method">
         <option value="cash">💵 Cash on Delivery</option>
         <option value="card">💳 Credit/Debit Card</option>
       </select>
-
       <div id="cardFields" style="display:none;">
         <input id="cardNumber" placeholder="Card Number" maxlength="16" type="text" aria-label="Card Number">
         <input id="cardExpiry" placeholder="MM/YY" type="text" aria-label="Card Expiry">
         <input id="cardCVV" placeholder="CVV" maxlength="3" type="text" aria-label="Card CVV">
       </div>
-
       <div class="buttons">
         <button class="back" onclick="nextStep(1)" id="backBtn">Back</button>
         <button class="next" onclick="nextStep(3)" id="nextBtn">Next</button>
       </div>
     </div>
 
-    <!-- Step 3 -->
+    <!-- Step 3: التأكيد / التفاصيل + زر تأكيد -->
     <div class="popup-box" id="step3" style="display:none;">
       <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
       <h3 id="confirmTitle">Confirm Your Order</h3>
-      <p id="orderSummaryText">Order summary will appear here.</p>
-
+      <p id="orderSummaryText"></p>
       <div class="buttons" id="confirmButtons">
         <button class="back" onclick="nextStep(2)" id="backConfirmBtn">Back</button>
         <button class="confirm" onclick="finishOrder()" id="confirmBtn">Confirm</button>
       </div>
-
-      <div id="afterConfirm" style="display:none;text-align:center;margin-top:10px;">
+      <div id="afterConfirm" style="display:none; text-align:center; margin-top:10px;">
         <button class="next" onclick="downloadInvoiceHTML()">📄 <span data-en="Download Invoice" data-ar="تحميل الفاتورة">Download Invoice</span></button>
       </div>
     </div>
   </div>
 
-  <!-- Common JS + Order JS -->
   <script src="js/common.js"></script>
   <script src="js/order.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>

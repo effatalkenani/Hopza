@@ -11,13 +11,21 @@
 <body class="theme-orange">
 
 <header>
+  <!-- زر البحث -->
+  <div class="search-container">
+    <input type="search" id="searchBox" placeholder="Search..." aria-label="Search" />
+  </div>
+
+  <!-- الشعار والاسم -->
   <div class="logo">
     <img src="images/super-slice-logo.png" alt="Super Slice Logo">
     <div class="logo-text">
-      <h1 data-en="SUPER SLICE" data-ar="سوبر سلايس">SUPER SLICE</h1>
-      <p data-en="One Slice, Endless Flavor" data-ar="شريحة واحدة، نكهة لا تنتهي">One Slice, Endless Flavor</p>
+      <h1 id="logoTitle" data-en="SUPER SLICE" data-ar="سوبر سلايس">SUPER SLICE</h1>
+      <p id="logoTagline" data-en="One Slice, Endless Flavor" data-ar="شريحة واحدة، نكهة لا تنتهي">One Slice, Endless Flavor</p>
     </div>
   </div>
+
+  <!-- التنقل -->
   <nav>
     <a href="index.html"><span class="material-icons">home</span> <span class="nav-text" data-en="Home" data-ar="الرئيسية">Home</span></a>
     <a href="order.html"><span class="material-icons">shopping_cart</span> <span class="nav-text" data-en="Order" data-ar="اطلب الآن">Order</span></a>
@@ -25,20 +33,19 @@
     <a href="#"><span class="material-icons">login</span> <span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span></a>
     <a href="#"><span class="material-icons">person_add</span> <span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span></a>
   </nav>
+
+  <!-- التحكم -->
   <div class="controls">
-      <!-- Accessibility quick toggle -->
-      
-      <!-- Theme toggle -->
-      <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme"></button>
-      <!-- Language toggle -->
-      <button class="lang-toggle" id="langBtn" aria-label="Toggle Language">AR</button>
+    <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme"></button>
+    <button class="lang-toggle" id="langBtn" aria-label="Toggle Language">AR</button>
   </div>
 </header>
 
+<!-- محتوى الصفحة -->
 <div class="page-wrap">
   <section id="contactSection">
     <div class="contact-container">
-      <!-- Left Info -->
+      <!-- معلومات الاتصال -->
       <div class="contact-info">
         <h2 id="contactTitle">Contact Us</h2>
         <p id="contactIntro">We’d love to hear from you. Reach us anytime!</p>
@@ -66,7 +73,7 @@
         </div>
       </div>
 
-      <!-- Right Form -->
+      <!-- نموذج الاتصال -->
       <div class="contact-form">
         <h3 id="formTitle">Send Message</h3>
         <form id="contactForm" novalidate>
@@ -88,12 +95,15 @@
     </div>
   </section>
 
-<footer>
-  <div id="footerText"></div>
-</footer>
+  <!-- الفوتر -->
+  <footer>
+    <div id="footerText"></div>
+  </footer>
 </div>
 
+<!-- سكربتات -->
 <script src="js/common.js"></script>
 <script src="js/contact.js"></script>
+
 </body>
 </html>
