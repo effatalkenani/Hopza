@@ -1,3 +1,80 @@
+/* Splash Screen */
+/* Splash only styles */
+#splashScreen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
+}
+
+.logo-container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.splash-logo {
+  width: 120px;
+  margin-bottom: 10px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+#splash-title {
+  font-size: 28px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+#splash-tagline {
+  color: #ffc107; /* أصفر */
+  font-size: 18px;
+  font-style: italic;
+}
+
+
+
+.slider-dots{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  transform: translate(-50%, -50%);
+  animation: rotateDots 2s linear infinite;
+  top: 30%;
+  transform: translate(-50%, -50%);
+
+}
+
+.slider-dots span {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #ffb703;
+  border-radius: 50%;
+}
+
+.slider-dots span:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
+.slider-dots span:nth-child(2) { right: 0; top: 50%; transform: translateY(-50%); }
+.slider-dots span:nth-child(3) { bottom: 0; left: 50%; transform: translateX(-50%); }
+.slider-dots span:nth-child(4) { left: 0; top: 50%; transform: translateY(-50%); }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes rotateDots {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+
+
 /* خلفية السلايدر – Slider full screen background */
 .slider {
   position: relative;

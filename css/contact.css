@@ -100,6 +100,7 @@ input, select, textarea {
   border: 1px solid #444;
   background: #222;
   color: #fff;
+  transition: border-color 0.3s ease;
 }
 textarea {
   resize: none;
@@ -123,6 +124,20 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background: var(--hover-color);
   color: #fff;
+}
+
+/* 🔴 Error Field Styling */
+input.error,
+textarea.error {
+  border-color: #e53e3e !important;
+}
+
+.field-error {
+  color: #e53e3e;
+  font-size: 0.85rem;
+  margin-top: -4px;
+  margin-bottom: 6px;
+  display: block;
 }
 
 /* Responsive */

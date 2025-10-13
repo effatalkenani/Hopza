@@ -401,18 +401,116 @@ function updatePopupLanguage() {
 
 
 
-// ==== تأكد من الترجمة بعد تحميل الصفحة أو عند تغيير اللغة من صفحة أخرى ====
 window.addEventListener('DOMContentLoaded', () => {
-  if (typeof updatePopupLanguage === 'function') updatePopupLanguage();
+  renderMenu(); // لو مو موجود أصلاً هنا
+
+  // 🔍 محرك البحث داخل هذا الحدث فقط
+  const searchBox = document.getElementById('searchBox');
+  const suggestions = document.getElementById('suggestions');
+
+  const keywords = [];
+  Object.keys(menuData).forEach(cat => {
+    menuData[cat].forEach(item => {
+      const en = item.name;
+      const ar = namesAR[cat]?.[en] || en;
+      keywords.push(en, ar);
+    });
+  });
+
+  searchBox.addEventListener('input', function () {
+    const q = this.value.toLowerCase().trim();
+    suggestions.innerHTML = '';
+
+    if (!q) {
+      suggestions.hidden = true;
+      return;
+    }
+
+    const matched = keywords.filter(k => k.toLowerCase().includes(q)).slice(0, 5);
+
+    matched.forEach(m => {
+      const li = document.createElement('li');
+      li.textContent = m;
+      li.onclick = () => {
+        searchBox.value = m;
+        suggestions.hidden = true;
+
+        const item = [...document.querySelectorAll('.item .title')]
+          .find(el => el.textContent.includes(m));
+        if (item) {
+          item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          item.style.border = '2px solid var(--accent-color)';
+          setTimeout(() => item.style.border = '', 2000);
+        }
+      };
+      suggestions.appendChild(li);
+    });
+
+    suggestions.hidden = matched.length === 0;
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!suggestions.contains(e.target) && e.target !== searchBox) {
+      suggestions.hidden = true;
+    }
+  });
 });
 
-window.addEventListener('lang:changed', () => {
-  if (typeof updatePopupLanguage === 'function') updatePopupLanguage();
+
+
+function validateStep1() {
+  let valid = true;
+  const nameEl = document.getElementById('custName');
+  const phoneEl = document.getElementById('phone');
+  const emailEl = document.getElementById('email');
+
+  // إزالة الأخطاء القديمة
+  [nameEl, phoneEl, emailEl].forEach(el => {
+    el.classList.remove('error');
+    const errEl = document.getElementById(el.id + 'Err');
+    if (errEl) errEl.textContent = '';
+  });
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phonePattern = /^\d{10}$/;
+
+  // تحقق من الاسم
+  if (!nameEl.value.trim()) {
+    showErrorField(nameEl, isEN ? "Please enter your name." : "الرجاء إدخال الاسم.");
+    valid = false;
+  }
+
+  // تحقق من رقم الهاتف
+  if (!phoneEl.value.trim()) {
+    showErrorField(phoneEl, isEN ? "Please enter phone number." : "الرجاء إدخال رقم الجوال.");
+    valid = false;
+  } else if (!phonePattern.test(phoneEl.value.trim())) {
+    showErrorField(phoneEl, isEN ? "Phone number must be 10 digits." : "رقم الجوال يجب أن يتكوّن من 10 أرقام.");
+    valid = false;
+  }
+
+  // تحقق من البريد
+  if (!emailEl.value.trim()) {
+    showErrorField(emailEl, isEN ? "Please enter email." : "الرجاء إدخال البريد الإلكتروني.");
+    valid = false;
+  } else if (!emailPattern.test(emailEl.value.trim())) {
+    showErrorField(emailEl, isEN ? "Please enter a valid email." : "الرجاء إدخال بريد إلكتروني صحيح.");
+    valid = false;
+  }
+
+  return valid;
+}
+
+function showErrorField(inputEl, msg) {
+  inputEl.classList.add('error');
+  const errEl = document.getElementById(inputEl.id + 'Err');
+  if (errEl) errEl.textContent = msg;
+}
+
+// ✅ تشغيل التحقق قبل الانتقال
+document.getElementById('continueBtn').addEventListener('click', (e) => {
+  e.preventDefault(); // يمنع أي سلوك افتراضي
+  if (validateStep1()) {
+    nextStep(2); // ينتقل إلى الدفع لو البيانات صحيحة
+  }
 });
-
-renderMenu();
-
-
-
-
-
