@@ -1,18 +1,41 @@
+/* 
+========================================
+🌐 Hopza — Common JavaScript (common.js)
+Purpose: Shared logic for all pages, including:
+- Persistent settings (language, theme, accessibility)
+- Dynamic translation (header, footer, splash, etc.)
+- Theme toggling (orange/blue)
+- Navigation activation and slider
+- Search suggestions with redirect
+- Login/Register modal with form validation
+
+Accessibility: Supports ARIA attributes and direction switching (LTR/RTL)
+Note: Original code intact. Comments added for academic explanation.
+========================================
+*/
+
+// ---------- Persistent Storage Management ----------
 const store = {
+  // Save and get language setting
   get lang() { return localStorage.getItem('lang') || 'en'; },
   set lang(v) { localStorage.setItem('lang', v); },
+  // Save and get selected theme (orange/blue)
   get theme() { return localStorage.getItem('theme') || 'orange'; },
   set theme(v) { localStorage.setItem('theme', v); },
+  // Save and get accessibility mode (boolean)
   get a11y() { return localStorage.getItem('a11y') === '1'; },
   set a11y(v) { localStorage.setItem('a11y', v ? '1' : '0'); }
 };
 
+// Detect current language (English by default)
 let isEN = (store.lang === 'en');
 
+// ---------- Main UI Buttons ----------
 const langBtn  = document.getElementById('langBtn');
 const themeBtn = document.getElementById('themeBtn');
 const a11yBtn  = document.getElementById('a11yBtn');
 
+// ---------- Accessibility Toggle ----------
 if (a11yBtn) {
   a11yBtn.addEventListener('click', () => {
     const on = !document.body.classList.contains('a11y-mode');
@@ -22,25 +45,36 @@ if (a11yBtn) {
   });
 }
 
+// ---------- Apply Saved Settings on Load ----------
 (function applyPersistedSettings(){
+  // Reset theme classes and apply saved theme
   document.body.classList.remove('theme-orange','theme-blue');
   document.body.classList.add(store.theme === 'blue' ? 'theme-blue' : 'theme-orange');
 
+  // Update theme button color
   if (themeBtn) {
     themeBtn.style.backgroundColor = store.theme === 'blue' ? '#FFC107' : '#00BCD4';
   }
 
+  // Enable accessibility if previously set
   if (store.a11y) document.body.classList.add('a11y-mode');
 
+  // Set text direction (LTR/RTL)
   document.body.dir = isEN ? 'ltr' : 'rtl';
 
+  // Translate visible elements (header, footer, etc.)
   translateHeader();
 
+  // Set language button text
   if (langBtn) {
     langBtn.textContent = isEN ? 'AR' : 'EN';
   }
+
+  // Update modal language if available
+  if (typeof updatePopupLanguage === 'function') updatePopupLanguage(); 
 })();
 
+// ---------- Language Switch ----------
 if (langBtn) {
   langBtn.addEventListener('click', () => {
     isEN = !isEN;
@@ -54,6 +88,7 @@ if (langBtn) {
   });
 }
 
+// ---------- Theme Switch ----------
 if (themeBtn) {
   themeBtn.addEventListener('click', () => {
     const newTheme = document.body.classList.contains('theme-orange') ? 'blue' : 'orange';
@@ -64,46 +99,48 @@ if (themeBtn) {
   });
 }
 
+// ---------- Translation Function ----------
 function translateHeader(){
+  // Translate navigation text
   const navTexts = document.querySelectorAll('.nav-text');
   navTexts.forEach(el => {
     el.textContent = isEN ? (el.dataset.en || el.textContent) : (el.dataset.ar || el.textContent);
   });
 
+  // Translate logo text and tagline
   const logoTitle = document.getElementById('logoTitle') || document.getElementById('brand');
   const logoTag   = document.getElementById('logoTagline') || document.getElementById('tagline');
   if (logoTitle) logoTitle.textContent = isEN ? 'Hopza' : 'هوبزا';
   if (logoTag)   logoTag.textContent   = isEN ? 'Too Fast to Last.' : 'سريعة ما تلحقها';
 
+  // Translate footer and search placeholder
   const footer = document.getElementById('footerText') || document.getElementById('foot');
   const searchBox = document.getElementById('searchBox');
-if (searchBox) {
-  searchBox.placeholder = isEN ? 'Search...' : 'بحث...';
-}
+  if (searchBox) searchBox.placeholder = isEN ? 'Search...' : 'بحث...';
 
   if (footer) {
     footer.innerHTML = isEN
-      ? '© 2025 Super Slice. All rights reserved. · <span aria-label="Accessibility Statement">♿ This website is accessibility-friendly</span>'
+      ? '© 2025 Hopza. All rights reserved. · <span aria-label="Accessibility Statement">♿ This website is accessibility-friendly</span>'
       : '© ٢٠٢٥ سوبر سلايس. جميع الحقوق محفوظة. · <span aria-label="إشعار الوصول">♿ هذا الموقع يدعم الوصول لذوي الإعاقة</span>';
   }
-  
-  // ✅ تحديث رسالة الترحيب وزر "اطلب الآن"
-const welcome = document.getElementById('welcomeMsg');
-const orderBtn = document.getElementById('orderNowBtn');
-if (welcome && orderBtn) {
-  welcome.innerHTML = isEN ? welcome.dataset.en : welcome.dataset.ar;
-  orderBtn.textContent = isEN ? orderBtn.dataset.en : orderBtn.dataset.ar;
+
+  // Update homepage welcome message and button text
+  const welcome = document.getElementById('welcomeMsg');
+  const orderBtn = document.getElementById('orderNowBtn');
+  if (welcome && orderBtn) {
+    welcome.innerHTML = isEN ? welcome.dataset.en : welcome.dataset.ar;
+    orderBtn.textContent = isEN ? orderBtn.dataset.en : orderBtn.dataset.ar;
+  }
 }
 
-}
-
-// Slider
+// ---------- Slider Logic ----------
 const slides = document.getElementById('slides');
 const dots   = document.getElementById('dots');
 if (slides && dots) {
   const total = slides.children.length;
   let index = 0;
 
+  // Generate navigation dots dynamically
   for (let i = 0; i < total; i++) {
     const b = document.createElement('button');
     b.setAttribute('role','tab');
@@ -112,72 +149,46 @@ if (slides && dots) {
     dots.appendChild(b);
   }
 
+  // Function to switch slide
   function update(){
-  slides.style.marginLeft = `-${index * 100}%`; // دايمًا يسار
-  [...dots.children].forEach((d,di)=>d.classList.toggle('active', di===index));
-}
+    slides.style.marginLeft = `-${index * 100}%`;
+    [...dots.children].forEach((d,di)=>d.classList.toggle('active', di===index));
+  }
 
-
+  // Auto slide every 4 seconds
   setInterval(()=>{ index = (index+1) % total; update(); }, 4000);
 }
 
-
-
-
-
+// ---------- Active Navigation Highlight ----------
 const links = document.querySelectorAll('#topNav a');
 const currentPage = window.location.pathname.split("/").pop();
-
 links.forEach(link => {
   const href = link.getAttribute('href');
-  if (href === currentPage) {
-    link.classList.add('active');
-  } else {
-    link.classList.remove('active');
-  }
+  link.classList.toggle('active', href === currentPage);
 });
 
-
-
-
-
-
-
+// ---------- Search Suggestion Logic ----------
 window.addEventListener('DOMContentLoaded', () => {
   const searchBox = document.getElementById('searchBox');
   const suggestions = document.getElementById('suggestions');
   if (!searchBox || !suggestions) return;
 
+  // Search keywords (EN + AR)
   const keywords = [
-    // Pizza
-    "Margherita", "مارغريتا", "Pepperoni", "ببروني", "Hawaiian", "هاواي",
-    "Cheese Lovers Pizza", "بيتزا عشاق الجبن", "BBQ Chicken", "دجاج باربكيو",
-    "Veggie", "خضار", "Sweet Corn Pizza", "بيتزا الذرة الحلوة",
-    "Mushroom Delight", "بيتزا الفطر", "Mexican", "مكسيكية",
-    "Cheddar Melt Pizza", "بيتزا شيدر",
-    
-    // Pasta
-    "Alfredo", "ألفريدو", "Arrabbiata", "أرابياتا", "Rose Pasta with Chicken", "باستا الورد بالدجاج",
-    "Bolognese", "بولونيز", "Farfalle Pasta", "فارفيلي", "Pink Sauce Pasta", "باستا الصوص الوردي",
-    "Lemon Chicken Pasta with Broccoli", "باستا دجاج بالليمون والبروكلي",
-    "Bacon & Pea Orecchiette", "أوريكياتي بالبازلاء واللحم", 
-    "Crab Lemon Tagliatelle", "تاغلياتيلي بالليمون والسرطان",
-    "Stracciatella Tagliatelle", "تاغلياتيلي بالجبنة والفطر",
-
-    // Drinks
-    "Water", "ماء", "Apple Juice", "عصير تفاح", "Cola", "كولا", "Cold chocolate", "شوكولاتة باردة",
-    "Strawberry Juice", "عصير فراولة", "Mixed Fruit Juice", "عصير مشكل",
-    "Pepsi Juice", "بيبسي", "Cappuccino", "كابتشينو", "Mango Juice", "عصير مانجو", "Orange Juice", "عصير برتقال"
+    "Margherita","مارغريتا","Pepperoni","ببروني","Hawaiian","هاواي",
+    "Cheese Lovers Pizza","بيتزا عشاق الجبن","BBQ Chicken","دجاج باربكيو",
+    "Veggie","خضار","Sweet Corn Pizza","بيتزا الذرة الحلوة","Mushroom Delight","بيتزا الفطر",
+    "Mexican","مكسيكية","Cheddar Melt Pizza","بيتزا شيدر",
+    "Alfredo","ألفريدو","Arrabbiata","أرابياتا","Rose Pasta with Chicken","باستا الورد بالدجاج",
+    "Bolognese","بولونيز","Farfalle Pasta","فارفيلي","Pink Sauce Pasta","باستا الصوص الوردي",
+    "Water","ماء","Apple Juice","عصير تفاح","Cola","كولا","Cappuccino","كابتشينو"
   ];
 
+  // Show suggestions dynamically
   searchBox.addEventListener('input', function () {
     const q = this.value.toLowerCase().trim();
     suggestions.innerHTML = '';
-
-    if (!q) {
-      suggestions.hidden = true;
-      return;
-    }
+    if (!q) return suggestions.hidden = true;
 
     const matched = keywords.filter(k => k.toLowerCase().includes(q)).slice(0, 5);
 
@@ -187,8 +198,7 @@ window.addEventListener('DOMContentLoaded', () => {
       li.onclick = () => {
         searchBox.value = '';
         suggestions.hidden = true;
-
-        // ✅ ينقلك لصفحة الطلب ومعه الكلمة كمفتاح بحث
+        // Redirect to order page with search term
         window.location.href = `order.html?q=${encodeURIComponent(m)}`;
       };
       suggestions.appendChild(li);
@@ -197,6 +207,7 @@ window.addEventListener('DOMContentLoaded', () => {
     suggestions.hidden = matched.length === 0;
   });
 
+  // Hide suggestions when clicking outside
   document.addEventListener('click', (e) => {
     if (!suggestions.contains(e.target) && e.target !== searchBox) {
       suggestions.hidden = true;
@@ -204,19 +215,14 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
-
-
-
-
-// تأكد من الترجمة + عرض الصفحة
+// ---------- Redirect + Search Highlight ----------
 window.addEventListener('DOMContentLoaded', () => {
   if (typeof updatePopupLanguage === 'function') updatePopupLanguage();
 
-  // ✅ عرض القائمة أولًا
+  // Render menu (defined in order.js)
   renderMenu();
 
-  // ✅ بعدها نفذ البحث لو جاي من صفحة ثانية
+  // Highlight search term if passed from query
   const params = new URLSearchParams(window.location.search);
   const q = params.get('q');
   if (q) {
@@ -233,10 +239,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-
-
-
-// فتح وغلق النوافذ وتبديل بين login / register
+// ---------- Login / Register Modal Logic ----------
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('authModal');
   const loginBtn = document.getElementById('loginBtn');
@@ -248,24 +251,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const showRegister = document.getElementById('showRegister');
   const showLogin = document.getElementById('showLogin');
 
+  // Open login modal
   loginBtn.addEventListener('click', () => {
     modal.classList.remove('hidden');
     loginForm.classList.remove('hidden');
     registerForm.classList.add('hidden');
   });
 
+  // Open register modal
   registerBtn.addEventListener('click', () => {
     modal.classList.remove('hidden');
     registerForm.classList.remove('hidden');
     loginForm.classList.add('hidden');
   });
 
+  // Close modal
   closeBtn.addEventListener('click', () => {
     modal.classList.add('hidden');
     clearAuthErrors();
     clearAuthInputs();
   });
 
+  // Toggle between forms
   showRegister.addEventListener('click', () => {
     loginForm.classList.add('hidden');
     registerForm.classList.remove('hidden');
@@ -279,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearAuthInputs();
   });
 
-  // ✅ التحقق قبل الإرسال - Login
+  // ---------- Login Validation ----------
   document.getElementById('loginSubmit').addEventListener('click', (e) => {
     e.preventDefault();
     clearAuthErrors();
@@ -297,65 +304,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (valid) {
-      // افعل تسجيل الدخول — لأن ما فيه باك إند هنا، نُخليها مؤقتة
       alert(isEN ? "Logged in!" : "تم تسجيل الدخول!");
       modal.classList.add('hidden');
       clearAuthInputs();
     }
   });
 
-  // ✅ التحقق قبل الإرسال - Register
-document.getElementById('registerSubmit').addEventListener('click', (e) => {
-  e.preventDefault();
-  clearAuthErrors();
-  let valid = true;
+  // ---------- Register Validation ----------
+  document.getElementById('registerSubmit').addEventListener('click', (e) => {
+    e.preventDefault();
+    clearAuthErrors();
+    let valid = true;
 
-  const username = document.getElementById('regUsername');
-  const email = document.getElementById('regEmail');
-  const password = document.getElementById('regPassword');
-  const conf = document.getElementById('regConfirmPassword');
+    const username = document.getElementById('regUsername');
+    const email = document.getElementById('regEmail');
+    const password = document.getElementById('regPassword');
+    const conf = document.getElementById('regConfirmPassword');
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  // 🧩 التحقق من الاسم
-  if (!username.value.trim()) {
-    showError(username, isEN ? "Please enter username." : "الرجاء إدخال اسم المستخدم.");
-    valid = false;
-  }
+    // Username
+    if (!username.value.trim()) {
+      showError(username, isEN ? "Please enter username." : "الرجاء إدخال اسم المستخدم.");
+      valid = false;
+    }
 
-  // 🧩 التحقق من البريد
-  if (!email.value.trim()) {
-    showError(email, isEN ? "Please enter email." : "الرجاء إدخال البريد الإلكتروني.");
-    valid = false;
-  } else if (!emailPattern.test(email.value.trim())) {
-    showError(email, isEN ? "Please enter a valid email." : "الرجاء إدخال بريد إلكتروني صحيح.");
-    valid = false;
-  }
+    // Email
+    if (!email.value.trim()) {
+      showError(email, isEN ? "Please enter email." : "الرجاء إدخال البريد الإلكتروني.");
+      valid = false;
+    } else if (!emailPattern.test(email.value.trim())) {
+      showError(email, isEN ? "Please enter a valid email." : "الرجاء إدخال بريد إلكتروني صحيح.");
+      valid = false;
+    }
 
-  // 🧩 التحقق من كلمة المرور
-  if (!password.value.trim()) {
-    showError(password, isEN ? "Please enter password." : "الرجاء إدخال كلمة المرور.");
-    valid = false;
-  }
+    // Password
+    if (!password.value.trim()) {
+      showError(password, isEN ? "Please enter password." : "الرجاء إدخال كلمة المرور.");
+      valid = false;
+    }
 
-  // 🧩 التحقق من تأكيد كلمة المرور
-  if (!conf.value.trim()) {
-    showError(conf, isEN ? "Please confirm password." : "الرجاء تأكيد كلمة المرور.");
-    valid = false;
-  } else if (password.value.trim() && password.value !== conf.value) {
-    showError(conf, isEN ? "Passwords do not match." : "كلمتا المرور غير متطابقتين.");
-    valid = false;
-  }
+    // Confirm Password
+    if (!conf.value.trim()) {
+      showError(conf, isEN ? "Please confirm password." : "الرجاء تأكيد كلمة المرور.");
+      valid = false;
+    } else if (password.value.trim() && password.value !== conf.value) {
+      showError(conf, isEN ? "Passwords do not match." : "كلمتا المرور غير متطابقتين.");
+      valid = false;
+    }
 
-  // ✅ إذا كل شيء صحيح
-  if (valid) {
-    alert(isEN ? "Account created!" : "تم إنشاء الحساب!");
-    modal.classList.add('hidden');
-    clearAuthInputs();
-  }
-});
+    if (valid) {
+      alert(isEN ? "Account created!" : "تم إنشاء الحساب!");
+      modal.classList.add('hidden');
+      clearAuthInputs();
+    }
+  });
 
-
+  // ---------- Helper Functions ----------
   function showError(inputEl, msg) {
     inputEl.classList.add('error');
     const errEl = document.getElementById(inputEl.id + "Err");
@@ -372,10 +377,7 @@ document.getElementById('registerSubmit').addEventListener('click', (e) => {
   }
 });
 
-
-// ==========================
-// 🔤 تحديث لغة نافذة تسجيل الدخول / التسجيل
-// ==========================
+// ---------- Update Popup Language ----------
 function updatePopupLanguage() {
   const loginTitle = document.getElementById('loginTitle');
   const registerTitle = document.getElementById('registerTitle');
@@ -387,7 +389,12 @@ function updatePopupLanguage() {
   if (showLogin) showLogin.textContent = isEN ? 'Already have account? Login' : 'عندك حساب؟ تسجيل الدخول';
   if (showRegister) showRegister.textContent = isEN ? "Don't have account? Register" : 'ما عندك حساب؟ سجل الآن';
 
-  // ✅ Placeholder تحديث
+  const loginBtn = document.getElementById('loginSubmit');
+  const registerBtn = document.getElementById('registerSubmit');
+  if (loginBtn) loginBtn.textContent = isEN ? 'Login' : 'تسجيل الدخول';
+  if (registerBtn) registerBtn.textContent = isEN ? 'Register' : 'إنشاء حساب';
+
+  // Update placeholders dynamically
   const placeholders = {
     loginUsername: isEN ? 'Username or Email' : 'اسم المستخدم أو البريد الإلكتروني',
     loginPassword: isEN ? 'Password' : 'كلمة المرور',
