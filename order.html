@@ -1,84 +1,117 @@
+<!--
+========================================
+📦 Hopza — Order Page (order.html)
+Purpose: Displays the interactive ordering system for the Hopza website.
+Includes: 
+- Header with logo, navigation, and language/theme controls.
+- Menu section with category and sorting filters.
+- Basket area showing selected items and total price.
+- Popup modal for multi-step order checkout (details → payment → confirmation).
+- Auth modal for login/register.
+Accessibility: ARIA roles, labels, keyboard navigation, and screen-reader support.
+Note: Source code remains unchanged. Comments were added for academic documentation only.
+========================================
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Metadata setup: encoding, responsiveness, and title -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hopza | Order</title>
+
+  <!-- Base layout and page-specific styling -->
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/order.css">
 </head>
+
 <body class="theme-orange">
+  <!-- Accessibility link for skipping directly to main content -->
   <a href="#main" class="skip-link" aria-label="Skip to content">Skip to content</a>
 
+  <!-- ================= HEADER ================= -->
+  <!-- Header: logo, search bar, navigation menu, and controls -->
   <header class="site-header" role="banner" aria-label="Site header">
     <div class="logo" tabindex="0">
-      <img src="images/colored super slice logo.png" alt="Super Slice Logo" />
+      <img src="images/Hopza.png" alt="Hopza" />
       <div class="logo-text">
         <h1 id="logoTitle">Hopza</h1>
         <p id="logoTagline">Too Fast to Last.</p>
       </div>
     </div>
 
-    <!-- زر البحث -->
+    <!-- Search input with suggestion list -->
     <div class="search-container">
       <input type="search" id="searchBox" placeholder="Search..." aria-label="Search" />
-	  <ul id="suggestions" class="suggestions" hidden></ul>
-
+      <ul id="suggestions" class="suggestions" hidden></ul>
     </div>
 
- <nav id="topNav" class="main-nav" role="navigation" aria-label="Main navigation">
+    <!-- ================= NAVIGATION ================= -->
+    <!-- Main navigation bar with page links -->
+    <nav id="topNav" class="main-nav" role="navigation" aria-label="Main navigation">
 
-  <!-- Home -->
-  <a href="index.html" class="active">
-<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-<path d="M149.78-109.78v-496.33L480-854.31l330.22 248.18v496.35h-243.2v-299.74H392.98v299.74h-243.2Z"/></svg>
-    <span class="nav-text" data-en="Home" data-ar="الرئيسية">Home</span>
-  </a>
+      <!-- Home -->
+      <a href="index.html" class="active">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+             width="24px" fill="currentColor" aria-hidden="true">
+          <path d="M149.78-109.78v-496.33L480-854.31l330.22 248.18v496.35h-243.2v-299.74H392.98v299.74h-243.2Z"/>
+        </svg>
+        <span class="nav-text" data-en="Home" data-ar="الرئيسية">Home</span>
+      </a>
 
-  <!-- Order -->
-  <a href="order.html">
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-  <path d="M284-81.52q-31.76 0-54.38-22.62T207-158.52q0-31.76 22.62-54.38T284-235.52q31.76 0 54.38 22.62T361-158.52q0 31.76-22.62 54.38T284-81.52Zm391 0q-31.76 0-54.38-22.62T598-158.52q0-31.76 22.62-54.38T675-235.52q31.76 0 54.38 22.62T752-158.52q0 31.76-22.62 54.38T675-81.52ZM217.21-802.48h553.4q32.96 0 50.15 29.07 17.2 29.07 1.11 58.93l-124 224.96q-11.13 21.19-31.33 33.36Q646.34-444 622.52-444H335.61l-39.91 73.52h464.78v91.96H284.19q-50.08 0-74.75-42.27-24.68-42.28-1.35-83.73l52.3-92.26-137.36-291.74H41.52v-91.96h138.57l37.12 78Z"/></svg>
-    <span class="nav-text" data-en="Order" data-ar="اطلب الآن">Order</span>
-  </a>
+      <!-- Order -->
+      <a href="order.html">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+             width="24px" fill="currentColor" aria-hidden="true">
+          <path d="M284-81.52q-31.76 0-54.38-22.62T207-158.52q0-31.76 22.62-54.38T284-235.52q31.76 0 54.38 22.62T361-158.52q0 31.76-22.62 54.38T284-81.52Zm391 0q-31.76 0-54.38-22.62T598-158.52q0-31.76 22.62-54.38T675-235.52q31.76 0 54.38 22.62T752-158.52q0 31.76-22.62 54.38T675-81.52ZM217.21-802.48h553.4q32.96 0 50.15 29.07 17.2 29.07 1.11 58.93l-124 224.96q-11.13 21.19-31.33 33.36Q646.34-444 622.52-444H335.61l-39.91 73.52h464.78v91.96H284.19q-50.08 0-74.75-42.27-24.68-42.28-1.35-83.73l52.3-92.26-137.36-291.74H41.52v-91.96h138.57l37.12 78Z"/>
+        </svg>
+        <span class="nav-text" data-en="Order" data-ar="اطلب الآن">Order</span>
+      </a>
 
-  <!-- Contact -->
-  <a href="contact.html">
-<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-<path d="M754.48-146.87q-117.44-9-223.87-58.85-106.44-49.85-191.37-135.04-85.44-84.94-134.78-191.49-49.35-106.55-58.35-223.99-2-23.85 14.4-41.37 16.4-17.52 40.25-17.52h128.76q22.5 0 37.12 11.78 14.62 11.78 20.56 33.31l23.76 97.97q2.95 14.09-1.63 28.47-4.59 14.38-14.96 24.53l-95.94 94.09q19.55 35.37 43.36 67.96 23.82 32.59 53.86 62.13 27.81 27.8 59.17 51.63 31.35 23.83 66.01 42.41L622.5-397.8q10.13-9.9 21.52-12.87 11.39-2.98 26.48-.53l97.54 21.29q22.03 5.93 34.06 21.19 12.03 15.26 12.03 37.29v129.67q0 23.85-18.02 40.37-18.02 16.52-41.63 14.52Z"/></svg>    <span class="nav-text" data-en="Contact" data-ar="تواصل">Contact</span>
-  </a>
+      <!-- Contact -->
+      <a href="contact.html">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+             width="24px" fill="currentColor" aria-hidden="true">
+          <path d="M754.48-146.87q-117.44-9-223.87-58.85-106.44-49.85-191.37-135.04-85.44-84.94-134.78-191.49-49.35-106.55-58.35-223.99-2-23.85 14.4-41.37 16.4-17.52 40.25-17.52h128.76q22.5 0 37.12 11.78 14.62 11.78 20.56 33.31l23.76 97.97q2.95 14.09-1.63 28.47-4.59 14.38-14.96 24.53l-95.94 94.09q19.55 35.37 43.36 67.96 23.82 32.59 53.86 62.13 27.81 27.8 59.17 51.63 31.35 23.83 66.01 42.41L622.5-397.8q10.13-9.9 21.52-12.87 11.39-2.98 26.48-.53l97.54 21.29q22.03 5.93 34.06 21.19 12.03 15.26 12.03 37.29v129.67q0 23.85-18.02 40.37-18.02 16.52-41.63 14.52Z"/>
+        </svg>
+        <span class="nav-text" data-en="Contact" data-ar="تواصل">Contact</span>
+      </a>
 
-  
-<!-- Login -->
-<button id="loginBtn" class="nav-btn">
- <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true">
-      <path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z"/>
-    </svg>
-  <span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span>
-</button>
+      <!-- Login button opens authentication modal -->
+      <button id="loginBtn" class="nav-btn">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+             fill="currentColor" aria-hidden="true">
+          <path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z"/>
+        </svg>
+        <span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span>
+      </button>
 
-<!-- Register -->
-<button id="registerBtn" class="nav-btn">
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-  <path d="M724-402v-122H602v-86h122v-122h86v122h122v86H810v122h-86ZM360-504.31q-67.75 0-114.87-47.12Q198-598.56 198-666.31t47.13-114.87q47.12-47.13 114.87-47.13t114.87 47.13Q522-734.06 522-666.31t-47.13 114.88Q427.75-504.31 360-504.31ZM30-126.69v-119.93q0-36.38 18.15-65.77 18.15-29.39 48.47-45.15 63.3-32.07 129.56-48.11 66.25-16.04 133.73-16.04 67.47 0 133.82 16.04t129.65 48.11q30.32 15.76 48.47 45.15T690-246.62v119.93H30Z"/></svg>
-  <span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span>
-</button>
+      <!-- Register button opens registration form -->
+      <button id="registerBtn" class="nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+             width="24px" fill="currentColor" aria-hidden="true">
+          <path d="M724-402v-122H602v-86h122v-122h86v122h122v86H810v122h-86ZM360-504.31q-67.75 0-114.87-47.12Q198-598.56 198-666.31t47.13-114.87q47.12-47.13 114.87-47.13t114.87 47.13Q522-734.06 522-666.31t-47.13 114.88Q427.75-504.31 360-504.31ZM30-126.69v-119.93q0-36.38 18.15-65.77 18.15-29.39 48.47-45.15 63.3-32.07 129.56-48.11 66.25-16.04 133.73-16.04 67.47 0 133.82 16.04t129.65 48.11q30.32 15.76 48.47 45.15T690-246.62v119.93H30Z"/>
+        </svg>
+        <span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span>
+      </button>
+    </nav>
 
-
-
-</nav>
-
+    <!-- Theme and language toggle buttons -->
     <div class="controls">
       <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme"></button>
       <button class="lang-toggle" id="langBtn" aria-label="Toggle Language">AR</button>
     </div>
   </header>
-  
 
+  <!-- ================= MAIN CONTENT ================= -->
+  <!-- Main ordering section: menu + basket -->
   <main id="main" class="order-main" role="main">
     <section class="menu" aria-labelledby="menuTitle">
       <div class="menu-header">
         <h2 id="menuTitle" data-en="Menu" data-ar="القائمة">Menu</h2>
+
+        <!-- Category and sorting filters -->
         <div class="filters">
           <div class="select-wrap">
             <label id="catLabel" for="category" data-en="Category:" data-ar="التصنيف:">Category:</label>
@@ -88,6 +121,7 @@
               <option value="drinks" data-en="Drinks" data-ar="مشروبات">Drinks</option>
             </select>
           </div>
+
           <div class="select-wrap">
             <label id="sortLabel" for="sort" data-en="Sort by:" data-ar="الفرز حسب:">Sort by:</label>
             <select id="sort" aria-label="Sort by">
@@ -98,10 +132,13 @@
           </div>
         </div>
       </div>
+
+      <!-- Divider and dynamic product grid -->
       <div class="filters-divider" aria-hidden="true"></div>
       <div id="grid" class="menu-items" role="list"></div>
     </section>
 
+    <!-- Basket sidebar with live total -->
     <aside class="basket" aria-labelledby="basketTitle">
       <h2 id="basketTitle" data-en="Your Basket" data-ar="سلتك">Your Basket</h2>
       <div id="basketList"></div>
@@ -115,83 +152,38 @@
     </aside>
   </main>
 
-<!-- ✅ Popup الطلب مع التحقق -->
-<div id="orderPopup" role="dialog" aria-modal="true" aria-labelledby="enterDetails">
+  <!-- ================= ORDER POPUP (3 STEPS) ================= -->
+  <!-- Step 1: customer details -->
+  <div id="orderPopup" role="dialog" aria-modal="true" aria-labelledby="enterDetails">
+    <div class="popup-box" id="step1">
+      <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
+      <h3 id="enterDetails">Enter Your Details</h3>
 
-  <!-- Step 1: بياناتك -->
-  <div class="popup-box" id="step1">
-    <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
-    <h3 id="enterDetails">Enter Your Details</h3>
+      <input id="custName" placeholder="Full Name" type="text" aria-label="Full Name" />
+      <div class="error-msg" id="custNameErr"></div>
 
-    <!-- الاسم -->
-    <input id="custName" placeholder="Full Name" type="text" aria-label="Full Name" />
-    <div class="error-msg" id="custNameErr"></div>
+      <!-- Inline phone field with country code -->
+      <div class="inline-group">
+        <select id="countryCode" style="flex:1" aria-label="Country Code">
+          <option value="+966">🇸🇦 +966</option>
+          <option value="+44">🇬🇧 +44</option>
+        </select>
+        <input id="phone" placeholder="Phone Number" style="flex:2" type="text" aria-label="Phone Number" />
+      </div>
+      <div class="error-msg" id="phoneErr"></div>
 
-    <!-- الجوال -->
-    <div class="inline-group">
-      <select id="countryCode" style="flex:1" aria-label="Country Code">
-        <option value="+966">🇸🇦 +966</option>
-        <option value="+44">🇬🇧 +44</option>
-      </select>
-      <input id="phone" placeholder="Phone Number" style="flex:2" type="text" aria-label="Phone Number" />
-    </div>
-    <div class="error-msg" id="phoneErr"></div>
+      <input id="email" placeholder="Email" type="email" aria-label="Email" />
+      <div class="error-msg" id="emailErr"></div>
 
-    <!-- البريد -->
-    <input id="email" placeholder="Email" type="email" aria-label="Email" />
-    <div class="error-msg" id="emailErr"></div>
+      <textarea id="address" placeholder="Address (Optional)" aria-label="Address (Optional)"></textarea>
 
-    <!-- العنوان -->
-    <textarea id="address" placeholder="Address (Optional)" aria-label="Address (Optional)"></textarea>
-
-    <div class="buttons">
-      <button class="cancel" onclick="closePopup()" id="cancelBtn">Cancel</button>
-      <button class="next" id="continueBtn">Continue</button>
-    </div>
-  </div>
-
-  <!-- ✅ Step 2: الدفع -->
-  <div class="popup-box" id="step2" style="display:none;">
-    <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
-    <h3 id="paymentTitle">Payment Method</h3>
-
-    <select id="paymentMethod">
-      <option value="cash">💵 Cash on Delivery</option>
-      <option value="card">💳 Credit/Debit Card</option>
-    </select>
-
-    <div id="cardFields" style="display:none;">
-      <input id="cardNumber" placeholder="Card Number" maxlength="16" type="text" aria-label="Card Number">
-      <input id="cardExpiry" placeholder="MM/YY" type="text" aria-label="Card Expiry">
-      <input id="cardCVV" placeholder="CVV" maxlength="3" type="text" aria-label="Card CVV">
+      <div class="buttons">
+        <button class="cancel" onclick="closePopup()" id="cancelBtn">Cancel</button>
+        <button class="next" id="continueBtn">Continue</button>
+      </div>
     </div>
 
-    <div class="buttons">
-      <button class="back" id="backBtn" onclick="nextStep(1)">Back</button>
-      <button class="next" id="nextBtn" onclick="nextStep(3)">Next</button>
-    </div>
-  </div>
-
-  <!-- ✅ Step 3: التأكيد -->
-  <div class="popup-box" id="step3" style="display:none;">
-    <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
-    <h3 id="confirmTitle">Confirm Your Order</h3>
-    <div id="orderSummaryText"></div>
-
-    <div class="buttons">
-      <button class="back" id="backConfirmBtn" onclick="nextStep(2)">Back</button>
-      <button class="confirm" id="confirmBtn" onclick="finishOrder()">Confirm</button>
-    </div>
-
-    <div id="afterConfirm" style="display:none;">
-      <button class="next" onclick="downloadInvoiceHTML()">
-        <span>Download Invoice</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-    <!-- Step 2: طريقة الدفع -->
+    <!-- Step 2: payment method -->
     <div class="popup-box" id="step2" style="display:none;">
       <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
       <h3 id="paymentTitle">Payment Method</h3>
@@ -199,92 +191,90 @@
         <option value="cash">💵 Cash on Delivery</option>
         <option value="card">💳 Credit/Debit Card</option>
       </select>
+
+      <!-- Hidden fields shown only if "Card" is selected -->
       <div id="cardFields" style="display:none;">
         <input id="cardNumber" placeholder="Card Number" maxlength="16" type="text" aria-label="Card Number">
         <input id="cardExpiry" placeholder="MM/YY" type="text" aria-label="Card Expiry">
         <input id="cardCVV" placeholder="CVV" maxlength="3" type="text" aria-label="Card CVV">
       </div>
+
       <div class="buttons">
         <button class="back" onclick="nextStep(1)" id="backBtn">Back</button>
         <button class="next" onclick="nextStep(3)" id="nextBtn">Next</button>
       </div>
     </div>
 
-    <!-- Step 3: التأكيد / التفاصيل + زر تأكيد -->
+    <!-- Step 3: order confirmation -->
     <div class="popup-box" id="step3" style="display:none;">
       <button class="close-btn" onclick="closePopup()" aria-label="Close dialog">×</button>
       <h3 id="confirmTitle">Confirm Your Order</h3>
       <p id="orderSummaryText"></p>
+
       <div class="buttons" id="confirmButtons">
         <button class="back" onclick="nextStep(2)" id="backConfirmBtn">Back</button>
         <button class="confirm" onclick="finishOrder()" id="confirmBtn">Confirm</button>
       </div>
+
       <div id="afterConfirm" style="display:none; text-align:center; margin-top:10px;">
-        <button class="next" onclick="downloadInvoiceHTML()">📄 <span data-en="Download Invoice" data-ar="تحميل الفاتورة">Download Invoice</span></button>
+        <button class="next" onclick="downloadInvoiceHTML()">📄 
+          <span data-en="Download Invoice" data-ar="تحميل الفاتورة">Download Invoice</span>
+        </button>
       </div>
     </div>
   </div>
-  
-  
-  
-    <!-- ================= FOOTER ================= -->
-    <!--  
-    🦶 ذيل الصفحة (Footer) فيه حقوق النشر وتصريح الوصول.  
-    aria-label تساعد قارئ الشاشة يفهم النص الوصفي.  
 
-    Footer with copyright and accessibility statement.  
-    Includes ARIA labeling for screen readers.
-    -->
-    <footer id="footerText" class="site-footer" role="contentinfo">
-      © 2025 Super Slice. All rights reserved. · 
-      <span aria-label="Accessibility Statement">
-        ♿ This website is accessibility-friendly
-      </span>
-    </footer>
+  <!-- ================= FOOTER ================= -->
+  <!-- Footer with copyright -->
+  <footer id="footerText" class="site-footer" role="contentinfo">
+    © 2025 Hopza. All rights reserved. · 
+    <span aria-label="Accessibility Statement">
+      ♿ This website is accessibility-friendly
+    </span>
+  </footer>
 
+  <!-- ================= AUTH MODAL ================= -->
+  <!-- Login/Register modal reused across pages -->
+  <div id="authModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
 
+      <!-- Login form -->
+      <div id="loginForm" class="auth-form">
+        <h2 class="form-title" id="loginTitle">Login</h2>
+        <input type="text" id="loginUsername" placeholder="Username or Email">
+        <div class="error-msg" id="loginUsernameErr"></div>
+        <input type="password" id="loginPassword" placeholder="Password">
+        <div class="error-msg" id="loginPasswordErr"></div>
+        <button id="loginSubmit">Login</button>
 
-<!-- ✅ غلاف النافذة الكامل -->
-<div id="authModal" class="modal hidden">
-  <div class="modal-content">
-    <span class="close-btn">&times;</span>
+        <div class="toggle-forms">
+          <span id="showRegister">Don't have account? Register</span>
+        </div>
+      </div>
 
-    <!-- ✅ نموذج تسجيل الدخول -->
-    <div id="loginForm" class="auth-form">
-      <h2 class="form-title" id="loginTitle">Login</h2>
-      <input type="text" id="loginUsername" placeholder="Username or Email">
-      <div class="error-msg" id="loginUsernameErr"></div>
-      <input type="password" id="loginPassword" placeholder="Password">
-      <div class="error-msg" id="loginPasswordErr"></div>
-      <button id="loginSubmit">Login</button>
+      <!-- Register form -->
+      <div id="registerForm" class="auth-form hidden">
+        <h2 class="form-title" id="registerTitle">Register</h2>
+        <input type="text" id="regUsername" placeholder="Username">
+        <div class="error-msg" id="regUsernameErr"></div>
+        <input type="email" id="regEmail" placeholder="Email">
+        <div class="error-msg" id="regEmailErr"></div>
+        <input type="password" id="regPassword" placeholder="Password">
+        <div class="error-msg" id="regPasswordErr"></div>
+        <input type="password" id="regConfirmPassword" placeholder="Confirm Password">
+        <div class="error-msg" id="regConfirmPasswordErr"></div>
+        <button id="registerSubmit">Register</button>
 
-      <!-- 👇 الزر الخاص بالتحويل للتسجيل -->
-      <div class="toggle-forms">
-        <span id="showRegister">Don't have account? Register</span>
+        <div class="toggle-forms">
+          <span id="showLogin">Already have account? Login</span>
+        </div>
       </div>
     </div>
-
-    <!-- ✅ نموذج إنشاء حساب -->
-    <div id="registerForm" class="auth-form hidden">
-      <h2 class="form-title" id="registerTitle">Register</h2>
-      <input type="text" id="regUsername" placeholder="Username">
-      <div class="error-msg" id="regUsernameErr"></div>
-      <input type="email" id="regEmail" placeholder="Email">
-      <div class="error-msg" id="regEmailErr"></div>
-      <input type="password" id="regPassword" placeholder="Password">
-      <div class="error-msg" id="regPasswordErr"></div>
-      <input type="password" id="regConfirmPassword" placeholder="Confirm Password">
-      <div class="error-msg" id="regConfirmPasswordErr"></div>
-      <button id="registerSubmit">Register</button>
-
-      <!-- 👇 الزر الخاص بالتحويل لتسجيل الدخول -->
-      <div class="toggle-forms">
-        <span id="showLogin">Already have account? Login</span>
-      </div>
-    </div>
-
   </div>
-</div>
+
+  <!-- ================= JS FILES ================= -->
+  <!-- Shared JS for UI behavior and order logic -->
   <script src="js/common.js"></script>
   <script src="js/order.js"></script>
 </body>

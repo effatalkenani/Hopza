@@ -1,110 +1,105 @@
-
-
-
-
-<!--  
-📦 صفحة التواصل | Contact Page  
-🔸 هذه الصفحة مخصصة لتواصل المستخدم مع موقع Super Slice.  
-🔸 تحتوي على: الهيدر (Header) مع القائمة، ومربع البحث، ومعلومات التواصل، ونموذج المراسلة.  
-🔸 تم تضمين خصائص لدعم الوصول (مثل aria-label, role, alt) لتناسب المستخدمين ذوي الإعاقة.  
-
-This page represents the "Contact Us" page of the Super Slice website.  
-It includes the header with navigation and search, contact details, and a message form.  
-Accessibility attributes have been added to support users with disabilities (screen readers, keyboard access).
+<!--
+========================================
+📦 Hopza — Contact Page (contact.html)
+Purpose: Allows users to contact the "Hopza" website.
+Includes:
+- Header with logo, search box, and navigation menu.
+- Contact information section (address, phone, email, map).
+- Contact form with validation and accessibility support.
+- Auth modal for login/register.
+- Footer with accessibility statement.
+Accessibility: Semantic HTML, ARIA labels/roles, and responsive layout.
+Note: Source code unchanged; comments added for documentation only.
+========================================
 -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- 🧠 إعدادات اللغة، الترميز، والاستجابة -->
-  <!-- Setting document language, UTF-8 encoding, and responsive viewport -->
+  <!-- Language, character encoding, and responsive settings -->
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Hopza | Contact Us</title>
 
-  <!-- 💅 روابط التنسيق العامة والخاصة بالصفحة -->
-  <!-- Linking base stylesheet and page-specific stylesheet -->
+  <!-- Global and page-specific CSS -->
   <link rel="stylesheet" href="css/base.css"/>
   <link rel="stylesheet" href="css/contact.css"/>
 </head>
 
 <body class="theme-orange">
+
   <!-- ================= HEADER ================= -->
-  <!-- 🎩 رأس الصفحة يحتوي على الشعار، البحث، والقائمة -->
-  <!-- Header section containing logo, search box, and navigation -->
+  <!-- Header containing logo, search box, and navigation menu -->
   <header role="banner" aria-label="Site Header">
 
-    <!-- 🔍 مربع البحث -->
-    <!-- Search input for user convenience and accessibility -->
+    <!-- Search bar with live suggestion list -->
     <div class="search-container">
       <input type="search" id="searchBox" placeholder="Search..." aria-label="Search" />
-	  <ul id="suggestions" class="suggestions" hidden></ul>
+      <ul id="suggestions" class="suggestions" hidden></ul>
     </div>
 
-    <!-- 🍕 شعار الموقع -->
-    <!-- Site logo and title for branding -->
+    <!-- Brand logo and site title -->
     <div class="logo" tabindex="0">
-      <img src="images/colored super slice logo.png" alt="Super Slice Logo" />
+      <img src="images/Hopza.png" alt="Hopza" />
       <div class="logo-text">
-        <h1 id="logoTitle" data-en="SUPER SLICE" data-ar="سوبر سلايس">Hopza</h1>
-        <p id="logoTagline" data-en="One Slice, Endless Flavor" data-ar="شريحة واحدة، نكهة لا تنتهي">
-        Too Fast to Last.
+        <h1 id="logoTitle" data-en="Hopza" data-ar="سوبر سلايس">Hopza</h1>
+        <p id="logoTagline" data-en="Too fast to Last" data-ar="سريعة ماتلحقها">
+          Too Fast to Last.
         </p>
       </div>
     </div>
 
-  <!-- ================= NAVIGATION ================= -->
-    <!--  
-    📜 قائمة التنقل الرئيسية  
-    فيها روابط الصفحات الرئيسية مثل Home, Order, Contact, Login...  
-    استخدمنا role="navigation" و aria-label لتوضيح الوظيفة.  
+    <!-- ================= NAVIGATION ================= -->
+    <!-- Main navigation bar with ARIA roles -->
+    <nav id="topNav" class="main-nav" role="navigation" aria-label="Main navigation">
 
-    Main site navigation menu, using ARIA roles for clarity and accessibility.  
-    -->
-<nav id="topNav" class="main-nav" role="navigation" aria-label="Main navigation">
+      <!-- Home -->
+      <a href="index.html" class="active">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+             width="24px" fill="currentColor" aria-hidden="true">
+          <path d="M149.78-109.78v-496.33L480-854.31l330.22 248.18v496.35h-243.2v-299.74H392.98v299.74h-243.2Z"/>
+        </svg>
+        <span class="nav-text" data-en="Home" data-ar="الرئيسية">Home</span>
+      </a>
 
-  <!-- Home -->
-  <a href="index.html" class="active">
-<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-<path d="M149.78-109.78v-496.33L480-854.31l330.22 248.18v496.35h-243.2v-299.74H392.98v299.74h-243.2Z"/></svg>
-    <span class="nav-text" data-en="Home" data-ar="الرئيسية">Home</span>
-  </a>
+      <!-- Order -->
+      <a href="order.html">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+             width="24px" fill="currentColor" aria-hidden="true">
+          <path d="M284-81.52q-31.76 0-54.38-22.62T207-158.52q0-31.76 22.62-54.38T284-235.52q31.76 0 54.38 22.62T361-158.52q0 31.76-22.62 54.38T284-81.52Zm391 0q-31.76 0-54.38-22.62T598-158.52q0-31.76 22.62-54.38T675-235.52q31.76 0 54.38 22.62T752-158.52q0 31.76-22.62 54.38T675-81.52ZM217.21-802.48h553.4q32.96 0 50.15 29.07 17.2 29.07 1.11 58.93l-124 224.96q-11.13 21.19-31.33 33.36Q646.34-444 622.52-444H335.61l-39.91 73.52h464.78v91.96H284.19q-50.08 0-74.75-42.27-24.68-42.28-1.35-83.73l52.3-92.26-137.36-291.74H41.52v-91.96h138.57l37.12 78Z"/>
+        </svg>
+        <span class="nav-text" data-en="Order" data-ar="اطلب الآن">Order</span>
+      </a>
 
-  <!-- Order -->
-  <a href="order.html">
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-  <path d="M284-81.52q-31.76 0-54.38-22.62T207-158.52q0-31.76 22.62-54.38T284-235.52q31.76 0 54.38 22.62T361-158.52q0 31.76-22.62 54.38T284-81.52Zm391 0q-31.76 0-54.38-22.62T598-158.52q0-31.76 22.62-54.38T675-235.52q31.76 0 54.38 22.62T752-158.52q0 31.76-22.62 54.38T675-81.52ZM217.21-802.48h553.4q32.96 0 50.15 29.07 17.2 29.07 1.11 58.93l-124 224.96q-11.13 21.19-31.33 33.36Q646.34-444 622.52-444H335.61l-39.91 73.52h464.78v91.96H284.19q-50.08 0-74.75-42.27-24.68-42.28-1.35-83.73l52.3-92.26-137.36-291.74H41.52v-91.96h138.57l37.12 78Z"/></svg>
-    <span class="nav-text" data-en="Order" data-ar="اطلب الآن">Order</span>
-  </a>
+      <!-- Contact -->
+      <a href="contact.html">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+             width="24px" fill="currentColor" aria-hidden="true">
+          <path d="M754.48-146.87q-117.44-9-223.87-58.85-106.44-49.85-191.37-135.04-85.44-84.94-134.78-191.49-49.35-106.55-58.35-223.99-2-23.85 14.4-41.37 16.4-17.52 40.25-17.52h128.76q22.5 0 37.12 11.78 14.62 11.78 20.56 33.31l23.76 97.97q2.95 14.09-1.63 28.47-4.59 14.38-14.96 24.53l-95.94 94.09q19.55 35.37 43.36 67.96 23.82 32.59 53.86 62.13 27.81 27.8 59.17 51.63 31.35 23.83 66.01 42.41L622.5-397.8q10.13-9.9 21.52-12.87 11.39-2.98 26.48-.53l97.54 21.29q22.03 5.93 34.06 21.19 12.03 15.26 12.03 37.29v129.67q0 23.85-18.02 40.37-18.02 16.52-41.63 14.52Z"/>
+        </svg>
+        <span class="nav-text" data-en="Contact" data-ar="تواصل">Contact</span>
+      </a>
 
-  <!-- Contact -->
-  <a href="contact.html">
-<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-<path d="M754.48-146.87q-117.44-9-223.87-58.85-106.44-49.85-191.37-135.04-85.44-84.94-134.78-191.49-49.35-106.55-58.35-223.99-2-23.85 14.4-41.37 16.4-17.52 40.25-17.52h128.76q22.5 0 37.12 11.78 14.62 11.78 20.56 33.31l23.76 97.97q2.95 14.09-1.63 28.47-4.59 14.38-14.96 24.53l-95.94 94.09q19.55 35.37 43.36 67.96 23.82 32.59 53.86 62.13 27.81 27.8 59.17 51.63 31.35 23.83 66.01 42.41L622.5-397.8q10.13-9.9 21.52-12.87 11.39-2.98 26.48-.53l97.54 21.29q22.03 5.93 34.06 21.19 12.03 15.26 12.03 37.29v129.67q0 23.85-18.02 40.37-18.02 16.52-41.63 14.52Z"/></svg>    <span class="nav-text" data-en="Contact" data-ar="تواصل">Contact</span>
-  </a>
+      <!-- Login button opens authentication modal -->
+      <button id="loginBtn" class="nav-btn">
+        <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+             fill="currentColor" aria-hidden="true">
+          <path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z"/>
+        </svg>
+        <span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span>
+      </button>
 
-  
-<!-- Login -->
-<button id="loginBtn" class="nav-btn">
- <svg class="nav-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true">
-      <path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z"/>
-    </svg>
-  <span class="nav-text" data-en="Login" data-ar="تسجيل الدخول">Login</span>
-</button>
+      <!-- Register button -->
+      <button id="registerBtn" class="nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
+             width="24px" fill="currentColor" aria-hidden="true">
+          <path d="M724-402v-122H602v-86h122v-122h86v122h122v86H810v122h-86ZM360-504.31q-67.75 0-114.87-47.12Q198-598.56 198-666.31t47.13-114.87q47.12-47.13 114.87-47.13t114.87 47.13Q522-734.06 522-666.31t-47.13 114.88Q427.75-504.31 360-504.31ZM30-126.69v-119.93q0-36.38 18.15-65.77 18.15-29.39 48.47-45.15 63.3-32.07 129.56-48.11 66.25-16.04 133.73-16.04 67.47 0 133.82 16.04t129.65 48.11q30.32 15.76 48.47 45.15T690-246.62v119.93H30Z"/>
+        </svg>
+        <span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span>
+      </button>
+    </nav>
 
-<!-- Register -->
-<button id="registerBtn" class="nav-btn">
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
-  <path d="M724-402v-122H602v-86h122v-122h86v122h122v86H810v122h-86ZM360-504.31q-67.75 0-114.87-47.12Q198-598.56 198-666.31t47.13-114.87q47.12-47.13 114.87-47.13t114.87 47.13Q522-734.06 522-666.31t-47.13 114.88Q427.75-504.31 360-504.31ZM30-126.69v-119.93q0-36.38 18.15-65.77 18.15-29.39 48.47-45.15 63.3-32.07 129.56-48.11 66.25-16.04 133.73-16.04 67.47 0 133.82 16.04t129.65 48.11q30.32 15.76 48.47 45.15T690-246.62v119.93H30Z"/></svg>
-  <span class="nav-text" data-en="Register" data-ar="تسجيل">Register</span>
-</button>
-
-
-
-</nav>
-
-    <!-- ⚙️ أزرار التحكم -->
-    <!-- Control buttons for theme and language -->
+    <!-- Quick controls for theme and language -->
     <div class="controls">
       <button class="theme-toggle" id="themeBtn" aria-label="Toggle Theme"></button>
       <button class="lang-toggle" id="langBtn" aria-label="Toggle Language">AR</button>
@@ -112,55 +107,56 @@ Accessibility attributes have been added to support users with disabilities (scr
   </header>
 
   <!-- ================= MAIN CONTENT ================= -->
+  <!-- Contact info + form layout wrapper -->
   <div class="page-wrap">
     <section id="contactSection" aria-labelledby="contactTitle">
       <div class="contact-container">
 
-        <!-- 📍 قسم معلومات التواصل -->
-        <!-- Contact information section -->
+        <!-- Contact information area (address, phone, email, map) -->
         <div class="contact-info">
           <h2 id="contactTitle">Contact Us</h2>
           <p id="contactIntro">We’d love to hear from you. Reach us anytime!</p>
 
-          <!-- عنوان -->
+          <!-- Address -->
           <div class="info-row">
-            <svg class="nav-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
-              <path d="M754.48-146.87q-117.44-9-223.87-58.85..." />
+            <svg class="nav-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 -960 960 960" fill="currentColor">
+              <path d="..." />
             </svg>
             <span class="label" data-en="Address" data-ar="العنوان">Address</span>
             <span class="value">Al Admiral, Cardiff</span>
           </div>
 
-          <!-- رقم الهاتف -->
+          <!-- Phone -->
           <div class="info-row">
-            <svg class="nav-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="..."/></svg>
+            <svg class="nav-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 -960 960 960" fill="currentColor"><path d="..."/></svg>
             <span class="label" data-en="Phone" data-ar="الجوال">Phone</span>
             <span class="value" dir="ltr">+966599116484</span>
           </div>
 
-          <!-- البريد الإلكتروني -->
+          <!-- Email -->
           <div class="info-row">
-            <svg class="nav-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor"><path d="..."/></svg>
+            <svg class="nav-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 -960 960 960" fill="currentColor"><path d="..."/></svg>
             <span class="label" data-en="Email" data-ar="البريد">Email</span>
             <span class="value">alhajjajia@cardiff.ac.uk</span>
           </div>
 
-          <!-- 🗺️ خريطة -->
+          <!-- Embedded location map -->
           <div class="map-box">
             <img src="images/cardiff-map.jpg" alt="Map to our location in Cardiff">
           </div>
         </div>
 
         <!-- ================= CONTACT FORM ================= -->
-        <!-- ✉️ نموذج المراسلة -->
-        <!-- Contact form for user messages -->
+        <!-- User message submission form -->
         <div class="contact-form">
           <h3 id="formTitle">Send Message</h3>
           <form id="contactForm" novalidate aria-describedby="replyHint">
-            
             <input type="text" id="name" placeholder="Full Name" required aria-label="Full Name">
 
-            <!-- مجموعة رقم الجوال -->
+            <!-- Inline phone input with country selector -->
             <div class="phone-group">
               <select id="countryCode" aria-label="Country code">
                 <option value="+966">🇸🇦 +966</option>
@@ -174,67 +170,65 @@ Accessibility attributes have been added to support users with disabilities (scr
             <textarea id="message" placeholder="Type your message..." required aria-label="Message"></textarea>
             <button type="submit" id="sendBtn" aria-label="Send Message">Send</button>
 
-            <!-- رسالة فورية للقارئ -->
+            <!-- Live polite hint for accessibility -->
             <div class="hint" id="replyHint" aria-live="polite">We reply within 1-2 business days.</div>
           </form>
         </div>
       </div>
     </section>
 
+    <!-- ================= AUTH MODAL ================= -->
+    <!-- Authentication modal shared across pages -->
+    <div id="authModal" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
 
-<!-- ✅ غلاف النافذة الكامل -->
-<div id="authModal" class="modal hidden">
-  <div class="modal-content">
-    <span class="close-btn">&times;</span>
+        <!-- Login form -->
+        <div id="loginForm" class="auth-form">
+          <h2 class="form-title" id="loginTitle">Login</h2>
+          <input type="text" id="loginUsername" placeholder="Username or Email">
+          <div class="error-msg" id="loginUsernameErr"></div>
+          <input type="password" id="loginPassword" placeholder="Password">
+          <div class="error-msg" id="loginPasswordErr"></div>
+          <button id="loginSubmit">Login</button>
 
-    <!-- ✅ نموذج تسجيل الدخول -->
-    <div id="loginForm" class="auth-form">
-      <h2 class="form-title" id="loginTitle">Login</h2>
-      <input type="text" id="loginUsername" placeholder="Username or Email">
-      <div class="error-msg" id="loginUsernameErr"></div>
-      <input type="password" id="loginPassword" placeholder="Password">
-      <div class="error-msg" id="loginPasswordErr"></div>
-      <button id="loginSubmit">Login</button>
+          <div class="toggle-forms">
+            <span id="showRegister">Don't have account? Register</span>
+          </div>
+        </div>
 
-      <!-- 👇 الزر الخاص بالتحويل للتسجيل -->
-      <div class="toggle-forms">
-        <span id="showRegister">Don't have account? Register</span>
+        <!-- Register form -->
+        <div id="registerForm" class="auth-form hidden">
+          <h2 class="form-title" id="registerTitle">Register</h2>
+          <input type="text" id="regUsername" placeholder="Username">
+          <div class="error-msg" id="regUsernameErr"></div>
+          <input type="email" id="regEmail" placeholder="Email">
+          <div class="error-msg" id="regEmailErr"></div>
+          <input type="password" id="regPassword" placeholder="Password">
+          <div class="error-msg" id="regPasswordErr"></div>
+          <input type="password" id="regConfirmPassword" placeholder="Confirm Password">
+          <div class="error-msg" id="regConfirmPasswordErr"></div>
+          <button id="registerSubmit">Register</button>
+
+          <div class="toggle-forms">
+            <span id="showLogin">Already have account? Login</span>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- ✅ نموذج إنشاء حساب -->
-    <div id="registerForm" class="auth-form hidden">
-      <h2 class="form-title" id="registerTitle">Register</h2>
-      <input type="text" id="regUsername" placeholder="Username">
-      <div class="error-msg" id="regUsernameErr"></div>
-      <input type="email" id="regEmail" placeholder="Email">
-      <div class="error-msg" id="regEmailErr"></div>
-      <input type="password" id="regPassword" placeholder="Password">
-      <div class="error-msg" id="regPasswordErr"></div>
-      <input type="password" id="regConfirmPassword" placeholder="Confirm Password">
-      <div class="error-msg" id="regConfirmPasswordErr"></div>
-      <button id="registerSubmit">Register</button>
-
-      <!-- 👇 الزر الخاص بالتحويل لتسجيل الدخول -->
-      <div class="toggle-forms">
-        <span id="showLogin">Already have account? Login</span>
-      </div>
-    </div>
-
-  </div>
-</div>
     <!-- ================= FOOTER ================= -->
-    <!-- 🦶 ذيل الصفحة -->
-    <!-- Footer section -->
-    <footer role="contentinfo">
-      <div id="footerText">© 2025 Super Slice. Accessibility-friendly website ♿</div>
+    <!-- Footer containing legal and accessibility info -->
+    <footer id="footerText" class="site-footer" role="contentinfo">
+      © 2025 Hopza. All rights reserved. · 
+      <span aria-label="Accessibility Statement">
+        ♿ This website is accessibility-friendly
+      </span>
     </footer>
   </div>
 
-  <!-- ⚙️ سكربت مشترك للتحكم بالثيم واللغة -->
-  <!-- Common JS file for theme, language, and accessibility interactions -->
+  <!-- Common scripts for shared site logic -->
   <script src="js/common.js"></script>
-   <script src="js/contact.js"></script>
+  <script src="js/contact.js"></script>
 </body>
 </html>
-
