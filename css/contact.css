@@ -1,4 +1,24 @@
-/* Contact Page Layout */
+/* 
+========================================
+📞 Hopza — Contact Page Stylesheet (contact.css)
+Purpose: Defines layout and styling for the Contact page, 
+including background, information section, form design, and responsiveness.
+
+Includes:
+- Background layout with overlay
+- Left contact info section (address, phone, email, map)
+- Right message form (inputs, textarea, submit button)
+- Error field styling and responsive design
+
+Accessibility: High contrast colors, readable typography, 
+and flexible structure for different devices.
+
+Note: Original styles untouched. Comments added for documentation only.
+========================================
+*/
+
+/* ---------- Contact Page Layout ---------- */
+/* Full-page background with overlay and centered content */
 #contactSection {
   background: url('../images/sliderImage2.jpeg') center/cover no-repeat;
   position: relative;
@@ -8,12 +28,16 @@
   align-items: center;
   justify-content: center;
 }
+
+/* Dark transparent overlay for text readability */
 #contactSection::before {
   content: "";
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
 }
+
+/* Main container for contact info + form */
 .contact-container {
   position: relative;
   display: flex;
@@ -26,21 +50,28 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Left info */
+/* ---------- Left Information Panel ---------- */
+/* Contact info section (address, phone, email, map) */
 .contact-info {
   flex: 1;
   min-width: 320px;
   padding: 40px;
   background: #000;
 }
+
+/* Title styling */
 .contact-info h2 {
   color: var(--accent-color);
   margin: 0 0 10px;
 }
+
+/* Subtitle paragraph */
 .contact-info p {
   color: #ccc;
   margin: 0 0 18px;
 }
+
+/* Rows for icons + labels + values */
 .info-row {
   display: flex;
   align-items: center;
@@ -62,7 +93,7 @@
   color: #ddd;
 }
 
-/* Map */
+/* ---------- Embedded Map ---------- */
 .map-box {
   margin-top: 18px;
 }
@@ -74,24 +105,30 @@
   display: block;
 }
 
-/* Right form */
+/* ---------- Right Contact Form Panel ---------- */
 .contact-form {
   flex: 1;
   min-width: 320px;
   padding: 40px;
   background: #111;
 }
+
+/* Section heading */
 .contact-form h3 {
   text-align: center;
   color: var(--accent-color);
   margin: 0 0 18px;
 }
+
+/* Small message hint below form */
 .contact-form .hint {
   color: #bbb;
   font-size: .9rem;
   text-align: center;
   margin-top: 6px;
 }
+
+/* Shared input styling for all form fields */
 input, select, textarea {
   width: 100%;
   margin: 8px 0;
@@ -102,14 +139,20 @@ input, select, textarea {
   color: #fff;
   transition: border-color 0.3s ease;
 }
+
+/* Disable manual resize and set fixed height for text area */
 textarea {
   resize: none;
   height: 90px;
 }
+
+/* Group for phone number and country code */
 .phone-group {
   display: flex;
   gap: 6px;
 }
+
+/* ---------- Submit Button ---------- */
 button[type="submit"] {
   width: 100%;
   background: var(--accent-color);
@@ -121,17 +164,21 @@ button[type="submit"] {
   cursor: pointer;
   transition: .25s;
 }
+
+/* Hover effect with theme color swap */
 button[type="submit"]:hover {
   background: var(--hover-color);
   color: #fff;
 }
 
-/* 🔴 Error Field Styling */
+/* ---------- Error Field Styling ---------- */
+/* Highlight invalid fields with red border */
 input.error,
 textarea.error {
   border-color: #e53e3e !important;
 }
 
+/* Error message below each input */
 .field-error {
   color: #e53e3e;
   font-size: 0.85rem;
@@ -140,7 +187,8 @@ textarea.error {
   display: block;
 }
 
-/* Responsive */
+/* ---------- Responsive Layout ---------- */
+/* Stack sections vertically on smaller screens */
 @media (max-width: 900px) {
   .contact-container {
     flex-direction: column;

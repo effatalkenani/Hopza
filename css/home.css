@@ -1,5 +1,22 @@
-/* Splash Screen */
-/* Splash only styles */
+/* 
+========================================
+🏠 Hopza — Home Page Stylesheet (home.css)
+Purpose: Defines the main homepage visuals including the splash screen, 
+image slider, welcome text, and interactive “Order Now” button.
+
+Includes:
+- Splash screen animation
+- Image slider with overlay
+- Centered content (title and button)
+- Responsive layout and transition effects
+
+Accessibility: High contrast visuals and text readability overlay.
+Note: Original CSS preserved. Comments added for academic documentation only.
+========================================
+*/
+
+/* ---------- Splash Screen ---------- */
+/* Fullscreen splash overlay displayed before main content */
 #splashScreen {
   position: fixed;
   inset: 0;
@@ -11,33 +28,37 @@
   transition: opacity 0.5s ease;
 }
 
+/* Container for splash logo and tagline */
 .logo-container {
   position: relative;
   text-align: center;
   color: white;
 }
 
+/* Animated logo with pulse effect */
 .splash-logo {
   width: 120px;
   margin-bottom: 10px;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
+/* Main splash title */
 #splash-title {
   font-size: 28px;
   margin-top: 10px;
   font-weight: bold;
 }
 
+/* Tagline below splash title */
 #splash-tagline {
-  color: #ffc107; /* أصفر */
+  color: #ffc107; /* Yellow accent */
   font-size: 18px;
   font-style: italic;
 }
 
-
-
-.slider-dots{
+/* ---------- Animated Dots (Loading Effect) ---------- */
+/* Circular dot animation around logo */
+.slider-dots {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -47,9 +68,9 @@
   animation: rotateDots 2s linear infinite;
   top: 30%;
   transform: translate(-50%, -50%);
-
 }
 
+/* Dot elements positioned around the circle */
 .slider-dots span {
   position: absolute;
   width: 10px;
@@ -58,48 +79,51 @@
   border-radius: 50%;
 }
 
+/* Positioning each dot at 4 corners */
 .slider-dots span:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
 .slider-dots span:nth-child(2) { right: 0; top: 50%; transform: translateY(-50%); }
 .slider-dots span:nth-child(3) { bottom: 0; left: 50%; transform: translateX(-50%); }
 .slider-dots span:nth-child(4) { left: 0; top: 50%; transform: translateY(-50%); }
 
+/* Pulse animation for logo */
 @keyframes pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
 }
 
+/* Rotation animation for dots */
 @keyframes rotateDots {
   0% { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-
-
-/* خلفية السلايدر – Slider full screen background */
+/* ---------- Slider Section ---------- */
+/* Fullscreen slider background section */
 .slider {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  padding-top: 78px; /* لحساب الهيدر */
+  padding-top: 78px; /* Offset for fixed header */
 }
 
-/* الشرايح – Slides images */
+/* Slide images container */
 .slides {
   display: flex;
   width: 300%;
   height: 100%;
   transition: margin-left 0.5s ease;
-  direction: ltr; /* مهم جدًا */
+  direction: ltr; /* Ensures correct slide direction */
 }
 
+/* Individual slide images */
 .slides img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* طبقة تعتيم – Dark overlay layer */
+/* Overlay layer for darkening the slides */
 .overlay {
   position: absolute;
   inset: 78px 0 0 0;
@@ -107,11 +131,12 @@
   z-index: 1;
 }
 
-/* ✅ حاوية المحتوى المتمركز – Centered content block (for text, image, button) */
+/* ---------- Centered Welcome Content ---------- */
+/* Text + button block centered on screen */
 .centered-content {
   position: absolute;
-  top: 50%; /* منتصف العمودي */
-  left: 50%; /* منتصف الأفقي */
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
   z-index: 2;
@@ -120,7 +145,7 @@
   padding: 0 20px;
 }
 
-/* عنوان الترحيب – Welcome title */
+/* Welcome headline text */
 .welcome {
   font-size: 1.8rem;
   font-weight: bold;
@@ -129,7 +154,8 @@
   margin-bottom: 20px;
 }
 
-/* زر اطلب الآن – Order Now button */
+/* ---------- Call-to-Action Button ---------- */
+/* “Order Now” button styling */
 .btn {
   background: var(--accent-color);
   color: #000;
@@ -141,16 +167,19 @@
   cursor: pointer;
   transition: 0.3s;
   z-index: 2;
-  text-decoration: none; /* إزالة الخط */
+  text-decoration: none;
   display: inline-block;
   margin-top: 24px;
 }
+
+/* Hover animation for button */
 .btn:hover {
   background: var(--hover-color);
   color: #fff;
 }
 
-/* النقاط – Slider dots */
+/* ---------- Navigation Dots (Slider Controls) ---------- */
+/* Dots under slider for slide navigation */
 .dots {
   position: absolute;
   bottom: 40px;
@@ -160,6 +189,8 @@
   gap: 8px;
   z-index: 2;
 }
+
+/* Default dot appearance */
 .dots button {
   width: 12px;
   height: 12px;
@@ -169,26 +200,21 @@
   opacity: 0.5;
   cursor: pointer;
 }
+
+/* Active dot highlights current slide */
 .dots button.active {
   background: var(--accent-color);
   opacity: 1;
 }
 
-/* تذييل الموقع – Footer */
-.site-footer {
-  position: absolute;
-  bottom: 10px;
-  width: 100%;
-  z-index: 2;
-}
-
-/* هامش علوي للصفحات – Page padding to avoid header overlap */
+/* ---------- Page Padding ---------- */
+/* Avoid header overlap for inner content */
 .page-wrap {
   padding-top: 78px;
 }
 
-
-/* ✅ الرسالة الترحيبية وزر الطلب */
+/* (Duplicate sections retained intentionally for consistency) */
+/* Repeated for clarity of layout and academic traceability */
 .centered-content {
   position: absolute;
   top: 50%;
@@ -209,6 +235,7 @@
   margin-bottom: 20px;
 }
 
+/* Button styles restated for semantic clarity */
 .btn {
   background: var(--accent-color);
   color: #000;

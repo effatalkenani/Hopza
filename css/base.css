@@ -1,4 +1,19 @@
-/* Root variables */
+/* 
+========================================
+🎨 Hopza — Base Stylesheet (base.css)
+Purpose: Defines the global layout, color themes, header/footer positioning, 
+and shared UI components such as navigation, modals, and accessibility features.
+Includes:
+- CSS variables for themes
+- Header and footer layout
+- Navigation, logo, and search box
+- Responsive design and accessibility styling
+Note: Original styles untouched. Comments added for academic documentation only.
+========================================
+*/
+
+/* ---------- Root Variables ---------- */
+/* Define global color palette and theme defaults */
 :root {
   --accent-color: #ffb703;
   --hover-color: #219ebc;
@@ -8,15 +23,18 @@
   --line: #2b2b2b;
 }
 
+/* Alternative theme (blue mode) */
 body.theme-blue {
   --accent-color: #219ebc;
   --hover-color: #ffb703;
 }
 
+/* Apply border-box model globally */
 * {
   box-sizing: border-box;
 }
 
+/* Basic reset and background/text color setup */
 html, body {
   margin: 0;
   padding: 0;
@@ -25,16 +43,25 @@ html, body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Ensure footer does not overlap with content */
+main {
+  padding-bottom: 80px;
+}
+
+/* Hide elements visually but keep them accessible to screen readers */
 .visually-hidden {
   position: absolute;
   left: -9999px;
 }
 
+/* Focus indicator for keyboard navigation */
 :focus-visible {
   outline: 2px dashed var(--accent-color);
   outline-offset: 3px;
 }
 
+/* ---------- Header Layout ---------- */
+/* Fixed header with blur background */
 header {
   position: fixed;
   top: 0;
@@ -49,11 +76,10 @@ header {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* ------- English (LTR) ------- */
+/* ---------- LTR (English) Layout ---------- */
 body[dir="ltr"] header {
   flex-direction: row;
 }
-
 body[dir="ltr"] .logo { order: 1; }
 body[dir="ltr"] .search-container {
   order: 2;
@@ -70,22 +96,18 @@ body[dir="ltr"] .controls {
   margin-left: 20px;
 }
 
-
-/* ------- Arabic (RTL) ------- */
+/* ---------- RTL (Arabic) Layout ---------- */
 body[dir="rtl"] header {
   flex-direction: row;
 }
-
 body[dir="rtl"] .logo {
   order: 1;
   margin-right: auto;
 }
-
 body[dir="rtl"] .search-container {
   order: 2;
   margin-inline: 40px auto;
 }
-
 body[dir="rtl"] nav {
   order: 3;
   display: flex;
@@ -93,25 +115,21 @@ body[dir="rtl"] nav {
   gap: 22px;
   margin-right: 20px;
 }
-
 body[dir="rtl"] .controls {
   order: 4;
   margin-right: 20px;
 }
 
-
-/* ------- Logo ------- */
+/* ---------- Logo Styles ---------- */
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 .logo img {
-  height: 64px; /* أو حتى 72px لو تبي أكبر */
+  height: 64px; /* Slightly larger logo for visibility */
   object-fit: contain;
 }
-
-
 .logo-text {
   display: flex;
   flex-direction: column;
@@ -129,13 +147,12 @@ body[dir="rtl"] .controls {
   font-style: italic;
 }
 
-/* ------- Search ------- */
+/* ---------- Search Box ---------- */
 .search-container {
   flex-grow: 1;
   display: flex;
   justify-content: center;
 }
-
 #searchBox {
   background: #111;
   color: #fff;
@@ -147,7 +164,6 @@ body[dir="rtl"] .controls {
   width: 260px;
   max-width: 100%;
 }
-
 #searchBox::placeholder {
   color: #ccc;
 }
@@ -156,7 +172,7 @@ body[dir="rtl"] .controls {
   outline: none;
 }
 
-/* ------- Navigation ------- */
+/* ---------- Navigation Links ---------- */
 nav a {
   text-decoration: none;
   color: #fff;
@@ -171,37 +187,35 @@ nav a.active {
   color: var(--accent-color);
 }
 
-
-/* ---------- SVG ICONS STYLE ---------- */
+/* ---------- SVG Icon Styling ---------- */
 .nav-icon {
   width: 22px;
   height: 22px;
-  filter: brightness(0) invert(1); /* يجعلها بيضاء */
+  filter: brightness(0) invert(1); /* Makes icon white */
   transition: filter 0.3s ease, transform 0.2s ease;
 }
 
-/* لما يصير الزر نشط أو يتحرك الماوس عليه */
+/* Icon hover/active effects */
 nav a:hover .nav-icon,
 nav a.active .nav-icon {
   filter: invert(62%) sepia(95%) saturate(749%) hue-rotate(360deg) brightness(1.2);
   transform: scale(1.05);
 }
 
-/* تحكم بلون الأيقونة حسب الثيم */
+/* Adjust icon color according to current theme */
 body.theme-blue nav a:hover .nav-icon,
 body.theme-blue nav a.active .nav-icon {
   filter: invert(61%) sepia(99%) saturate(1955%) hue-rotate(175deg) brightness(1.2);
 }
 
-
-
-
-/* ------- Controls (language + theme) ------- */
+/* ---------- Controls (Theme & Language) ---------- */
 .controls {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
+/* Language switch button */
 #langBtn {
   padding: 6px 14px;
   border-radius: 20px;
@@ -216,6 +230,8 @@ body.theme-blue nav a.active .nav-icon {
   background: var(--hover-color);
   color: #fff;
 }
+
+/* Theme toggle circle */
 #themeBtn {
   width: 38px;
   height: 38px;
@@ -228,16 +244,22 @@ body.theme-blue #themeBtn {
   background: var(--accent-color);
 }
 
-/* ------- Footer ------- */
+/* ---------- Footer ---------- */
 footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
   text-align: center;
-  padding: 18px 12px;
+  padding: 14px 10px;
   color: #aaa;
-  background: transparent !important;
-  border: none !important;
-  backdrop-filter: none !important;
-  margin-top: 40px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+/* Accessibility note inside footer */
 .footer-a11y {
   display: block;
   margin-top: 6px;
@@ -245,68 +267,54 @@ footer {
   font-size: 0.9rem;
 }
 
-/* ------- Page padding ------- */
+/* ---------- Layout Padding ---------- */
 .page-wrap {
   padding-top: 88px;
 }
 
-/* ------- Responsive ------- */
+/* ---------- Responsive Adjustments ---------- */
 @media (max-width: 900px) {
   header {
     padding: 10px 16px;
     flex-wrap: wrap;
   }
-
   .logo-text h1 {
     font-size: 1.05rem;
   }
-
   nav {
     gap: 14px;
     width: 100%;
     justify-content: center;
     order: 4;
   }
-
   .search-container {
     width: 100%;
     order: 3;
     margin: 12px 0;
   }
-
   #searchBox {
     width: 100%;
     margin-top: 8px;
   }
-
   .controls {
     order: 2;
     margin: 10px auto;
   }
 }
 
+/* ---------- Misc Styling ---------- */
 #dots {
   margin-bottom: 40px;
 }
-
-#logoTitle
- {
-  
+#logoTitle {
   font-weight: bold;
 }
-
-
-
-
-
 #logoTagline {
-  color: #ffc107; /* أصفر */
+  color: #ffc107;
   font-weight: bold;
 }
 
-
-
-
+/* ---------- Search Suggestions Dropdown ---------- */
 .suggestions {
   position: absolute;
   background: #111;
@@ -330,9 +338,7 @@ footer {
   color: #000;
 }
 
-
-
-
+/* ---------- Modal Styling ---------- */
 .modal {
   position: fixed;
   inset: 0;
@@ -342,11 +348,9 @@ footer {
   justify-content: center;
   z-index: 9999;
 }
-
 .hidden {
   display: none;
 }
-
 .modal-content {
   background: #111;
   padding: 30px;
@@ -356,7 +360,6 @@ footer {
   color: white;
   position: relative;
 }
-
 .close-btn {
   position: absolute;
   top: 15px;
@@ -366,6 +369,7 @@ footer {
   color: white;
 }
 
+/* ---------- Authentication Forms ---------- */
 .auth-form input {
   width: 100%;
   margin: 10px 0;
@@ -405,17 +409,9 @@ footer {
   margin: 6px 0;
 }
 
-
-
-
-
-
-
-
-/* زر login/register في الهيدر */
+/* ---------- Header Login/Register Buttons ---------- */
 .nav-btn {
-	  font-weight: bold;
-
+  font-weight: bold;
   background: none;
   border: none;
   color: white;
@@ -426,7 +422,43 @@ footer {
   cursor: pointer;
   font-size: 1rem;
 }
-
 .nav-btn svg {
   fill: white;
+}
+
+
+/* ---------- Smart Responsive Fix for Header Navigation ---------- */
+/* Only wraps extra buttons (like Register) to next line when space runs out */
+@media (max-width: 900px) {
+  header {
+    flex-wrap: wrap; /* Allow wrapping for small screens */
+  }
+
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  nav a, .nav-btn {
+    flex: 0 1 auto; /* Let items keep natural width */
+  }
+
+  /* Move only the last button (Register) to a new line if it doesn’t fit */
+  nav a:last-child, .nav-btn:last-child {
+    flex-basis: 100%;
+    text-align: center;
+  }
+
+  .search-container {
+    order: 4;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .controls {
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+  }
 }

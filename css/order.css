@@ -1,84 +1,348 @@
-/* مساحة للمحتوى تحت الهيدر */
-/* Top spacing for fixed header */
-.order-main { display: flex; gap: 38px; justify-content: space-between; padding: 120px 50px 40px; }
+/* 
+========================================
+🍕 Hopza — Order Page Stylesheet (order.css)
+Purpose: Defines layout and visual styling for the order page, 
+including the menu grid, shopping basket, order popup, and responsive behavior.
 
-/* القائمة والسلة */
-/* Menu & basket */
-.menu { flex: 2; background: #1b1b1b; border-radius: 12px; padding: 18px 18px 8px; box-shadow: 0 0 10px rgba(0,0,0,.35); }
-.basket { flex: 1; background: #141414; border-radius: 12px; padding: 18px; box-shadow: 0 0 10px rgba(0,0,0,.35); position: sticky; top: 90px; }
+Includes:
+- Menu and basket layout
+- Product cards, buttons, and pricing
+- Popup order form (multi-step)
+- Error field styling and responsive adjustments
 
-.basket h2 { margin: 8px 0 12px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
-.menu-header { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; }
-.filters { display: flex; gap: 20px; align-items: center; }
-label { font-size: .95rem; color: #bfbfbf; }
+Accessibility: Uses strong contrast, spacing, and readable structure.
+Note: Original code untouched; comments added for academic clarity.
+========================================
+*/
 
+/* ---------- Layout Spacing ---------- */
+/* Adds top padding to prevent header overlap */
+.order-main {
+  display: flex;
+  gap: 38px;
+  justify-content: space-between;
+  padding: 120px 50px 40px;
+}
+
+/* ---------- Menu & Basket Containers ---------- */
+/* Left: Menu listing; Right: Basket summary */
+.menu {
+  flex: 2;
+  background: #1b1b1b;
+  border-radius: 12px;
+  padding: 18px 18px 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,.35);
+}
+.basket {
+  flex: 1;
+  background: #141414;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 0 10px rgba(0,0,0,.35);
+  position: sticky;
+  top: 90px;
+}
+
+/* Basket title styling */
+.basket h2 {
+  margin: 8px 0 12px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 10px;
+}
+
+/* ---------- Menu Filters ---------- */
+/* Header area with category and sort filters */
+.menu-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+.filters {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+label {
+  font-size: .95rem;
+  color: #bfbfbf;
+}
+
+/* Dropdown filter elements */
 select {
-  appearance: none; background: #101010; color: #fff; border: 1px solid var(--line);
-  border-radius: 8px; padding: 8px 34px 8px 10px;
+  appearance: none;
+  background: #101010;
+  color: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 34px 8px 10px;
 }
-.select-wrap { position: relative; }
-.select-wrap:after { content:"▾"; position:absolute; right:10px; top:50%; transform: translateY(-50%); color:#bfbfbf; pointer-events:none; }
 
-.filters-divider { height:2px; margin: 12px -18px 10px; background:linear-gradient(90deg,transparent,var(--accent-color),transparent); opacity:.4; }
+/* Wrapper adds a down-arrow symbol */
+.select-wrap {
+  position: relative;
+}
+.select-wrap:after {
+  content:"▾";
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform: translateY(-50%);
+  color:#bfbfbf;
+  pointer-events:none;
+}
 
-.menu-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
-.item { background: #222; border-radius: 12px; overflow: hidden; transition: transform .25s, box-shadow .25s; }
-.item:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
-.menu-items img { width: 100%; height: 180px; object-fit: cover; display: block; border-bottom: 1px solid var(--line); border-radius: 12px 12px 0 0; }
-.info { padding: 12px 14px; }
-.title { margin: 0; font-size: 1rem; }
-.price { color: var(--accent-color); font-weight: bold; margin-top: 4px; }
-.cal { color: #bfbfbf; font-size: .85rem; }
-.actions { margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
-.qty { display: flex; align-items: center; gap: 6px; }
-.qty button { width: 26px; height: 26px; border-radius: 50%; border: none; background: var(--hover-color); color: #fff; cursor: pointer; }
-.add { border: none; background: var(--accent-color); color: #000; font-weight: bold; border-radius: 6px; padding: 7px 12px; cursor: pointer; }
-.add:hover { background: var(--hover-color); color: #fff; }
+/* Divider line below filters */
+.filters-divider {
+  height:2px;
+  margin: 12px -18px 10px;
+  background:linear-gradient(90deg,transparent,var(--accent-color),transparent);
+  opacity:.4;
+}
 
-.basket-item { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
-.rm { background: #e53935; color: #fff; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer; }
-.total { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px; font-weight: bold; }
-.place { margin-top: 12px; width: 100%; border: none; background: var(--accent-color); color:#000; font-weight: bold; border-radius: 8px; padding: 11px; cursor: pointer; }
-.place:hover { background: var(--hover-color); color: #fff; }
+/* ---------- Menu Grid ---------- */
+/* Product cards arranged in responsive grid */
+.menu-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+.item {
+  background: #222;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform .25s, box-shadow .25s;
+}
+.item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
 
-/* ===== Popup ===== */
+/* Product image styling */
+.menu-items img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--line);
+  border-radius: 12px 12px 0 0;
+}
+
+/* Product info section */
+.info {
+  padding: 12px 14px;
+}
+.title {
+  margin: 0;
+  font-size: 1rem;
+}
+.price {
+  color: var(--accent-color);
+  font-weight: bold;
+  margin-top: 4px;
+}
+.cal {
+  color: #bfbfbf;
+  font-size: .85rem;
+}
+
+/* ---------- Product Actions ---------- */
+/* Quantity and add-to-cart buttons */
+.actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.qty button {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: var(--hover-color);
+  color: #fff;
+  cursor: pointer;
+}
+.add {
+  border: none;
+  background: var(--accent-color);
+  color: #000;
+  font-weight: bold;
+  border-radius: 6px;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+.add:hover {
+  background: var(--hover-color);
+  color: #fff;
+}
+
+/* ---------- Basket Items ---------- */
+/* Basket item row layout */
+.basket-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+/* Remove button for basket item */
+.rm {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+}
+
+/* Total section in basket */
+.total {
+  margin-top: 12px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
+  font-weight: bold;
+}
+
+/* Place order button */
+.place {
+  margin-top: 12px;
+  width: 100%;
+  border: none;
+  background: var(--accent-color);
+  color:#000;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 11px;
+  cursor: pointer;
+}
+.place:hover {
+  background: var(--hover-color);
+  color: #fff;
+}
+
+/* ---------- Popup Modal ---------- */
+/* Hidden by default; appears on order confirmation */
 #orderPopup {
-  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75);
-  z-index: 3000; align-items: center; justify-content: center;
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
 }
-.popup-box {
-  background: var(--panel); border-radius: 12px; padding: 25px 30px; width: 420px; max-width: 90%;
-  color: var(--text); box-shadow: 0 0 20px rgba(0,0,0,.5); animation: fadeIn .3s ease; position: relative;
-}
-.popup-box h3 { color: var(--accent-color); margin-bottom: 12px; text-align: center; }
-.popup-box input, .popup-box select, .popup-box textarea {
-  width: 100%; margin: 6px 0 12px; padding: 8px; border-radius: 6px; border: 1px solid var(--line); background: #111; color: #fff; resize: none;
-}
-.popup-box textarea { height: 70px; }
 
-.inline-group { display: flex; gap: 6px; }
-.buttons { display: flex; justify-content: space-between; margin-top: 10px; }
-.popup-box button { border: none; border-radius: 6px; padding: 8px 14px; font-weight: bold; cursor: pointer; }
+/* Popup content box styling */
+.popup-box {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 25px 30px;
+  width: 420px;
+  max-width: 90%;
+  color: var(--text);
+  box-shadow: 0 0 20px rgba(0,0,0,.5);
+  animation: fadeIn .3s ease;
+  position: relative;
+}
+
+/* Popup titles */
+.popup-box h3 {
+  color: var(--accent-color);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Form fields inside popup */
+.popup-box input, 
+.popup-box select, 
+.popup-box textarea {
+  width: 100%;
+  margin: 6px 0 12px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: #111;
+  color: #fff;
+  resize: none;
+}
+.popup-box textarea {
+  height: 70px;
+}
+
+/* Inline group for phone fields */
+.inline-group {
+  display: flex;
+  gap: 6px;
+}
+
+/* Button row in popup */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Popup button base */
+.popup-box button {
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Specific button styles by action type */
 .cancel { background: #444; color: #fff; }
 .next   { background: var(--accent-color); color: #000; }
 .back   { background: #555; color: #fff; }
 .confirm{ background: var(--hover-color); color: #fff; }
+
+/* Close icon in top-right corner */
 .close-btn {
-  position: absolute; top: 8px; right: 10px; font-size: 20px; color: #fff; cursor: pointer; background: transparent; border: none;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+  background: transparent;
+  border: none;
 }
 
-.sr { position: absolute; left: -9999px; }
+/* Hidden accessibility label for screen readers */
+.sr {
+  position: absolute;
+  left: -9999px;
+}
 
-/* Anim */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px);} to { opacity: 1; transform: translateY(0);} }
+/* ---------- Animations ---------- */
+/* Fade-in effect for popup appearance */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-/* Media */
+/* ---------- Responsive Design ---------- */
+/* Stack elements vertically on smaller screens */
 @media (max-width: 1000px) {
-  .order-main { flex-direction: column; padding: 120px 22px 40px; }
-  .basket { position: static; }
+  .order-main {
+    flex-direction: column;
+    padding: 120px 22px 40px;
+  }
+  .basket {
+    position: static;
+  }
 }
 
-
+/* ---------- Error Styling ---------- */
+/* Message text for invalid inputs */
 .error-msg {
   color: #ff4b4b;
   font-size: 0.85rem;
@@ -86,8 +350,8 @@ select {
   min-height: 1em;
 }
 
+/* Highlight invalid fields */
 input.error, textarea.error {
   border-color: #ff4b4b !important;
   outline: none;
 }
-
